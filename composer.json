@@ -51,14 +51,11 @@
             "symfony/runtime": true
         },
         "sort-packages": true,
+        "cache-dir": "C:/Users/aBgAm/symfony/cache",
         "vendor-dir": "C:/Users/aBgAm/symfony/vendor",
-        "bin-dir": "C:/Users/aBgAm/symfony/bin",
-        "cache-dir": "C:/Users/aBgAm/symfony/cache"
+        "bin-dir": "C:/Users/aBgAm/symfony/bin"
     },
     "autoload": {
-        "psr-0": {
-			"DeezerAPI": "lib/"
-        },
         "psr-4": {
             "App\\": "src/"
         }
