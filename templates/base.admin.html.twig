@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Welcome!</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="/css/wordpress/wp-admin/load-styles.css" />
+        <link rel="stylesheet" href="/css/plugins/woocommerce/packages/woocommerce-admin/dist/components/style.css" type="text/css" />
+        <link rel="stylesheet" href="/css/plugins/woocommerce/packages/woocommerce-admin/dist/app/style.css" type="text/css" />
+        <link rel="stylesheet" id="storefront-icons-css" href="/css/themes/storefront/assets/css/base/icons.css" type="text/css" />
+        <link rel="stylesheet" href="/css/plugins/woocommerce/assets/css/admin.css" type="text/css" />
+		<style id="symfony-form-css" type="text/css">
+		.woocommerce_options_panel div#form div {
+			padding: 0;
+			margin: 9px 0;
+		}
+		.woocommerce_options_panel,
+		.woocommerce_options_panel input[type="email"],
+		.woocommerce_options_panel input[type="number"],
+		.woocommerce_options_panel input[type="password"],
+		.woocommerce_options_panel input[type="text"] {
+			width: 100%;
+		}
+		@media screen and (min-width: 500px) {
+			.woocommerce_options_panel div#form div {
+				padding: 5px 20px 35px 162px !important;
+			}
+		}
+		</style>
+        {% block stylesheets %}
+		{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body class="woocommerce-embed-page">
+	    <div id="wpbody-content">
+			<div class="wrap">
+				{% block body %}{% endblock %}
+				<script type="text/javascript" src="/js/themes/storefront/assets/js/navigation.min.js"></script>
+				<script type="text/javascript" src="/js/jquery-3.6.3.min.js"></script>
+				<script type="text/javascript" src="/js/admin.js"></script>
+				{% block javascripts %}
+				{% endblock %}
+				<footer id="footer" class="col-full">
+					<div id="credit" class="col-right">
+						<p>
+							Designed by
+							<a title="Premium WordPress Themes & Plugins by WooThemes" alt="Premium WordPress Themes & Plugins by WooThemes" href="http://www.woothemes.com/">
+								<img width="74" height="19" alt="WooThemes" src="/images/woothemes.png">
+							</a>
+						</p>
+					</div>
+				</footer>
+			</div>
+		</div>
+	</body>
+</html>

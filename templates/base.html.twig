@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Welcome!</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+		<link rel="stylesheet" id="storefront-style-css" href="/css/themes/storefront/style.css" type="text/css" />
+		<link rel="stylesheet" id="storefront-woocommerce-style-css" href="/css/themes/storefront/assets/css/woocommerce/woocommerce.css" type="text/css" />
+		<link rel="stylesheet" id="storefront-icons-css" href="/css/themes/storefront/assets/css/base/icons.css" type="text/css" />
+		<style id="storefront-style-inline-css" type="text/css">
+		button.menu-toggle,
+		button.menu-toggle:hover,
+		.handheld-navigation .dropdown-toggle {
+			color: #333333;
+		}
+
+		button.menu-toggle,
+		button.menu-toggle:hover {
+			border-color: #333333;
+		}
+
+		button.menu-toggle,
+		button.menu-toggle:hover {
+			background-color: #ffffff;
+		}
+
+		button.menu-toggle:after,
+		button.menu-toggle:before,
+		button.menu-toggle span:before {
+			background-color: #333333;
+		}
+
+		table.cart td.product-remove,
+		table.cart td.actions {
+			border-top-color: #ffffff;
+		}
+		</style>
+        {% block stylesheets %}
+		{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+		<div id="wrapper">
+			<div id="inner-wrapper">
+				{% block body %}{% endblock %}
+				<script type="text/javascript" src="/js/themes/storefront/assets/js/navigation.min.js"></script>
+				<script type="text/javascript" src="/js/jquery-3.6.3.min.js"></script>
+				{% block javascripts %}
+				{% endblock %}
+				<footer id="footer" class="col-full">
+					<div id="credit" class="col-right">
+						<p>
+							<object type="image/svg+xml" data="/images/deezer.svg" width="152" height="34"></object>
+						</p>
+						<p>
+							Designed by
+							<a title="Premium WordPress Themes & Plugins by WooThemes" alt="Premium WordPress Themes & Plugins by WooThemes" href="http://www.woothemes.com/">
+								<img width="74" height="19" alt="WooThemes" src="/images/woothemes.png">
+							</a>
+						</p>
+					</div>
+				</footer>
+			</div>
+		</div>
+	</body>
+</html>
