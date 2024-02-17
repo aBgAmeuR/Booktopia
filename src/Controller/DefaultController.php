@@ -15,21 +15,22 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DefaultController extends AbstractController
 {
-	private EntityManagerInterface $entityManager;
-	private LoggerInterface $logger;
-	
-	public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger)  {
-		$this->entityManager = $entityManager;
-		$this->logger = $logger;
-	}
+    private EntityManagerInterface $entityManager;
+    private LoggerInterface $logger;
+
+    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger)
+    {
+        $this->entityManager = $entityManager;
+        $this->logger = $logger;
+    }
 
     #[Route('/', name: 'homepage')]
     public function indexAction(Request $request, LoggerInterface $logger): Response
     {
-        // replace this example code with whatever you need
-        //return $this->render('default/index.html.twig', [
-        //    'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        //]);
-		return $this->redirectToRoute('afficheRecherche');
+        $query = $this->entityManager->createQuery("SELECT a FROM App\Entity\Catalogue\Article a");
+        $articles = $query->getResult();
+        return $this->render('home.html.twig', [
+            'articles' => $articles,
+        ]);
     }
 }
