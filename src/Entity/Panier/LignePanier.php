@@ -13,15 +13,17 @@ class LignePanier
     private float $prixTotal;
 
     private int $quantite;
-	
-	public function __construct()
+
+    private $commande;
+
+    public function __construct()
     {
     }
-	
+
     public function setArticle(Article $article): LignePanier
     {
         $this->article = $article;
-		$this->prixUnitaire = $article->getPrix();
+        $this->prixUnitaire = $article->getPrix();
         return $this;
     }
 
@@ -36,27 +38,27 @@ class LignePanier
         $this->recalculer();
         return $this;
     }
-	
+
     public function getPrixUnitaire(): float
     {
         return $this->prixUnitaire;
     }
-	
+
     public function setPrixTotal(float $prixTotal): LignePanier
     {
         $this->prixTotal = $prixTotal;
         return $this;
     }
-	
+
     public function getPrixTotal(): ?float
     {
         return $this->prixTotal;
     }
-	
+
     public function setQuantite(int $quantite): LignePanier
     {
         $this->quantite = $quantite;
-		$this->recalculer();
+        $this->recalculer();
         return $this;
     }
 
@@ -64,10 +66,19 @@ class LignePanier
     {
         return $this->quantite;
     }
-	
+
     public function recalculer()
     {
-        $this->prixTotal = $this->quantite * $this->prixUnitaire ;
+        $this->prixTotal = $this->quantite * $this->prixUnitaire;
+    }
+    public function setCommande($commande)
+    {
+        $this->commande = $commande;
+        return $this;
+    }
+
+    public function getCommande()
+    {
+        return $this->commande;
     }
 }
-

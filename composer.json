@@ -51,9 +51,9 @@
             "symfony/runtime": true
         },
         "sort-packages": true,
-        "vendor-dir": "C:/Users/aBgAm/symfony/vendor",
-        "bin-dir": "C:/Users/aBgAm/symfony/bin",
-        "cache-dir": "C:/Users/aBgAm/symfony/cache"
+        "cache-dir": "C:/Users/canni/symfony/cache",
+        "vendor-dir": "C:/Users/canni/symfony/vendor",
+        "bin-dir": "C:/Users/canni/symfony/bin"
     },
     "autoload": {
         "psr-0": {
