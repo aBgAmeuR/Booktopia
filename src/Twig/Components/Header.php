@@ -2,13 +2,18 @@
 
 namespace App\Twig\Components;
 
-use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
-use Symfony\UX\LiveComponent\DefaultActionTrait;
+use App\DTO\SearchDto;
+use Symfony\UX\TwigComponent\Attribute\AsTwigComponent;
 
-#[AsLiveComponent]
-final class Header
+#[AsTwigComponent('header')]
+class Header
 {
-    use DefaultActionTrait;
+  public bool $is_logged_in;
 
-    public string $content;
+  public SearchDto $searchDto;
+
+  public function __construct(?SearchDto $searchDto = null)
+  {
+    $this->searchDto = $searchDto;
+  }
 }

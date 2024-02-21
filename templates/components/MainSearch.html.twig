@@ -18,14 +18,13 @@
 </div> #}
 
 
-<div {{ attributes }}>
-	{# {{ form_start(form, {
+<div{{ attributes }}>
+	{{ form_start(form, {
     attr: {
         'data-action': 'live#action',
         'data-action-name': 'prevent|save'
     },
-}) }} #}
-	{{ form_start(form, {attr: {'data-action': 'live#action'}}) }}
+}) }}
 
 
 	{{ form_row(form.search) }}

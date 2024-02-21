@@ -14,7 +14,6 @@ class LignePanier
 
     private int $quantite;
 
-    private $commande;
 
     public function __construct()
     {
@@ -70,15 +69,5 @@ class LignePanier
     public function recalculer()
     {
         $this->prixTotal = $this->quantite * $this->prixUnitaire;
-    }
-    public function setCommande($commande)
-    {
-        $this->commande = $commande;
-        return $this;
-    }
-
-    public function getCommande()
-    {
-        return $this->commande;
     }
 }

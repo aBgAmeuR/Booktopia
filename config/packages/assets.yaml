@@ -1,0 +1,5 @@
+framework:
+  assets:
+    packages:
+      app:
+        base_path: "/assets"
