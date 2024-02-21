@@ -25,6 +25,9 @@ class Livre extends Article
     #[ORM\Column(length: 255, name: 'resume')]
     private ?string $resume = null;
 
+    #[ORM\Column(length: 255, name: 'categorie')]
+    private ?string $categorie = null;
+
 
     public function getAuteur(): ?string
     {
@@ -97,6 +100,17 @@ class Livre extends Article
 
         return $this;
     }
+
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): static
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
     
 }
-
