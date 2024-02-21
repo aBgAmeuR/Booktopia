@@ -1,0 +1,35 @@
+{# <div {{attributes}}>
+	{{ form_start(form, {
+        attr: {
+            'data-action': 'live#action',
+            'data-action-name': 'prevent|save',
+        },
+}) }}
+
+	<div class="h-10 px-4 rounded-base text-sm font-bold flex items-center gap-3 bg-secondary shadow-none">
+		<svg width="20" height="21" viewbox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path fill-rule="evenodd" clip-rule="evenodd" d="M19.5306 18.9694L14.8366 14.2762C17.6629 10.883 17.3204 5.86693 14.0591 2.88935C10.7978 -0.0882368 5.77134 0.0259986 2.64867 3.14867C-0.474001 6.27134 -0.588237 11.2978 2.38935 14.5591C5.36693 17.8204 10.383 18.1629 13.7762 15.3366L18.4694 20.0306C18.7624 20.3237 19.2376 20.3237 19.5306 20.0306C19.8237 19.7376 19.8237 19.2624 19.5306 18.9694ZM1.75 9C1.75 5.27208 4.77208 2.25 8.5 2.25C12.2279 2.25 15.25 5.27208 15.25 9C15.25 12.7279 12.2279 15.75 8.5 15.75C4.77379 15.7459 1.75413 12.7262 1.75 9Z" fill="#737373"/>
+		</svg>
+		{{ form_widget(form.search, { 'attr': {'class': 'w-full h-full bg-transparent border-none focus:outline-none shadow-none'} }) }}
+	</div>
+
+	{{ form_end(form) }}
+
+</div> #}
+
+
+<div {{ attributes }}>
+	{# {{ form_start(form, {
+    attr: {
+        'data-action': 'live#action',
+        'data-action-name': 'prevent|save'
+    },
+}) }} #}
+	{{ form_start(form, {attr: {'data-action': 'live#action'}}) }}
+
+
+	{{ form_row(form.search) }}
+
+	<button>Save</button>
+	{{ form_end(form) }}
+</div>

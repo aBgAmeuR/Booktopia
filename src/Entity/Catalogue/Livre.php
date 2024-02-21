@@ -10,14 +10,24 @@ class Livre extends Article
     #[ORM\Column(length: 255,name: 'auteur')]
     private ?string $auteur = null;
 
+    #[ORM\Column(length: 255, name: 'editeur')]
+    private ?string $editeur = null;
+
+    #[ORM\Column(length: 255, name: 'date_de_publication')]
+    private ?string $dateDePublication = null;
+
     #[ORM\Column(length: 255, name: 'isbn')]
     private ?string $ISBN = null;
 
     #[ORM\Column(name: 'nb_pages')]
     private ?int $nbPages = null;
 
-    #[ORM\Column(length: 255, name: 'date_de_parution')]
-    private ?string $dateDeParution = null;
+    #[ORM\Column(length: 255, name: 'resume')]
+    private ?string $resume = null;
+
+    #[ORM\Column(length: 255, name: 'categorie')]
+    private ?string $categorie = null;
+
 
     public function getAuteur(): ?string
     {
@@ -27,6 +37,30 @@ class Livre extends Article
     public function setAuteur(string $auteur): static
     {
         $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    public function getEditeur(): ?string
+    {
+        return $this->editeur;
+    }
+
+    public function setEditeur(string $editeur): static
+    {
+        $this->editeur = $editeur;
+
+        return $this;
+    }
+
+    public function getDateDePublication(): ?string
+    {
+        return $this->dateDePublication;
+    }
+
+    public function setDateDePublication(string $dateDePublication): static
+    {
+        $this->dateDePublication = $dateDePublication;
 
         return $this;
     }
@@ -55,16 +89,28 @@ class Livre extends Article
         return $this;
     }
 
-    public function getDateDeParution(): ?string
+    public function getResume(): ?string
     {
-        return $this->dateDeParution;
+        return $this->resume;
     }
 
-    public function setDateDeParution(string $dateDeParution): static
+    public function setResume(string $resume): static
     {
-        $this->dateDeParution = $dateDeParution;
+        $this->resume = $resume;
 
         return $this;
     }
-}
 
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): static
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+    
+}

@@ -7,13 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\InheritanceType("SINGLE_TABLE")]
 #[ORM\DiscriminatorColumn(name: "article_type", type: "string")]
-#[ORM\DiscriminatorMap(["article" => "Article", "livre" => "Livre", "musique" => "Musique"])]
+#[ORM\DiscriminatorMap(["article" => "Article", "livre" => "Livre"])]
 class Article
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "NONE")]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?string $id = null;
 
     #[ORM\Column(length: 255, name: 'titre')]
     private ?string $titre = null;
@@ -27,12 +27,12 @@ class Article
     #[ORM\Column(length: 255, name: 'image')]
     private ?string $image = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
 	
-    public function setId(int $id): static
+    public function setId(string $id): static
     {
         $this->id = $id;
 
@@ -87,4 +87,3 @@ class Article
         return $this;
     }
 }
-
