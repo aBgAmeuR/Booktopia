@@ -44,6 +44,8 @@ class AppFixtures extends Fixture
 					$livre->setResume($book['volumeInfo']['description']);
 				if (isset($book['saleInfo']['listPrice']['amount']))
 					$livre->setPrix($book['saleInfo']['listPrice']['amount']);
+				else continue;
+				if (isset($book['saleInfo']['retailPrice']['amount']))
 				$livre->setDisponibilite($book['saleInfo']['retailPrice']['amount']);
 				$livre->setImage($book['volumeInfo']['imageLinks']['thumbnail']);
 				if (isset($book['volumeInfo']['categories'][0]))

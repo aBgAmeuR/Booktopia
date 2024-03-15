@@ -1,0 +1,14 @@
+<section{{attributes}} class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+	{% for product in products %}
+		<article class="space-y-3 ">
+			<div class="h-64 w-full flex justify-center items-center overflow-hidden rounded-base">
+				<img src="{{ product.image }}" alt="image product" class="w-full">
+			</div>
+			<main>
+				<h2 class="text-primary text-base">{{ product.titre }}</h2>
+				<div class="text-secondary text-sm">{{ product.auteur }}</div>
+				<div class="text-secondary text-sm">{{ product.prix }}€</div>
+			</main>
+		</article>
+	{% endfor %}
+</section>

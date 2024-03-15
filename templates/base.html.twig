@@ -14,10 +14,9 @@
 		{# <link rel="stylesheet" id="storefront-icons-css" href="/css/themes/storefront/assets/css/base/icons.css" type="text/css"/> #}
 
 			{% block stylesheets %}
-			<link rel="stylesheet" href="{{ asset('styles/app.css') }}"> {{ encore_entry_link_tags('app') }}
+		{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
-	</head>
+	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/> </head>
 	<body>
 		<div id="wrapper">
 			<div id="inner-wrapper"> {% block body %}{% endblock %}

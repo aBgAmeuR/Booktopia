@@ -1,0 +1,30 @@
+<div {{attributes}}>
+	{{ form_start(form, {
+        attr: {
+            'data-action': 'live#action',
+            'data-action-name': 'prevent|save',
+        },
+    }) }}
+
+	<div class="flex gap-3">
+
+		{% for category in categories %}
+			<button type="submit" class="bg-secondary rounded-xl px-3 py-1 text-sm font-medium" data-category="{{ category }}">
+				{{ category }}
+			</button>
+		{% endfor %}
+	</div>
+
+	{{ form_end(form) }}</div>
+{% block javascripts %}
+	<script>
+		document.querySelectorAll('button[data-category]').forEach(button => {
+button.addEventListener('click', event => {
+const form = event.target.closest('form');
+const categoryInput = form.querySelector('input[name="category_search[category]"]');
+categoryInput.value = event.target.dataset.category;
+console.log(categoryInput.value);
+});
+});
+	</script>
+{% endblock %}

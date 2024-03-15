@@ -4,11 +4,11 @@
 {% endblock %}
 
 {% block body %}
-	<twig:Header is_logged_in="0" :searchdto="searchDto"></twig:Header>
+	<twig:Header is_logged_in="0" :searchDto="searchDto"></twig:Header>
 
-	<main class="">
-		<h1 class="text-6xl text-center text-white">Recherche</h1>
-
-		{# <twig:MainSearch :searchdto="searchDto"></twig:MainSearch> #}
+	<main class="w-full max-w-[960px] my-5 mx-auto p-4">
+		<h1>Rechercher un livre</h1>
+		<twig:MainSearch :searchDto="searchDto"></twig:MainSearch>
+		<twig:FilterProducts :searchDto="searchDto"></twig:FilterProducts>
 	</main>
 {% endblock %}

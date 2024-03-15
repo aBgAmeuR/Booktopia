@@ -20,9 +20,8 @@ class Commande
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
-
-    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: LignePanier::class, cascade: ['persist', 'remove'])]
-    private Collection $lineItems;
+    
+    private ?LignePanier $lignePanier = null; 
 
     #[ORM\Column]
     private ?string $status = null;
@@ -39,7 +38,7 @@ class Commande
 
     public function __construct()
     {
-        $this->lineItems = new ArrayCollection();
+        $this->lineItems = new Collection();
         $this->date = new \DateTime(); // Initialize with the current date by default
     }
 
@@ -112,23 +111,23 @@ class Commande
         return $this->lineItems;
     }
 
-    public function addLineItem(LignePanier $lineItem): self
-    {
-        if (!$this->lineItems->contains($lineItem)) {
-            $this->lineItems[] = $lineItem;
-            $lineItem->setCommande($this);
-        }
-        return $this;
-    }
+    // public function addLineItem(LignePanier $lineItem): self
+    // {
+    //     if (!$this->lineItems->contains($lineItem)) {
+    //         $this->lineItems[] = $lineItem;
+    //         $lineItem->setCommande($this);
+    //     }
+    //     return $this;
+    // }
 
-    public function removeLineItem(LignePanier $lineItem): self
-    {
-        if ($this->lineItems->removeElement($lineItem)) {
-            // set the owning side to null (unless already changed)
-            if ($lineItem->getCommande() === $this) {
-                $lineItem->setCommande(null);
-            }
-        }
-        return $this;
-    }
+    // public function removeLineItem(LignePanier $lineItem): self
+    // {
+    //     if ($this->lineItems->removeElement($lineItem)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($lineItem->getCommande() === $this) {
+    //             $lineItem->setCommande(null);
+    //         }
+    //     }
+    //     return $this;
+    // }
 }

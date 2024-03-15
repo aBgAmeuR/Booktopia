@@ -1,0 +1,6 @@
+<div{{attributes}}>
+	<section class="filters">
+		<twig:FilterButtons :searchDto="searchDto" :products="products"></twig:FilterButtons>
+	</section>
+	<twig:ProductCards :products="products" :results="results"></twig:ProductCards>
+</div>

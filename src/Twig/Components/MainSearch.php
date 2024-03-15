@@ -27,7 +27,6 @@ final class MainSearch extends AbstractController
         return $this->createForm(MainSearchType::class, $this->searchDto);
     }
 
-
     #[LiveAction]
     public function save()
     {
