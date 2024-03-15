@@ -9,28 +9,23 @@
 			{% block title %}Booktopia
 			{% endblock %}
 		</title>
-		{# <link rel="stylesheet" id="storefront-style-css" href="/css/themes/storefront/style.css" type="text/css"/> #}
-		{# <link rel="stylesheet" id="storefront-woocommerce-style-css" href="/css/themes/storefront/assets/css/woocommerce/woocommerce.css" type="text/css"/> #}
-		{# <link rel="stylesheet" id="storefront-icons-css" href="/css/themes/storefront/assets/css/base/icons.css" type="text/css"/> #}
-
-			{% block stylesheets %}
-		{{ encore_entry_link_tags('app') }}
+		{% block stylesheets %}
+			{# <link rel="stylesheet" href="{{ asset('styles/app.tailwind.css') }}"> #}
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-	<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/> </head>
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+	</head>
 	<body>
-		<div id="wrapper">
-			<div id="inner-wrapper"> {% block body %}{% endblock %}
-				{# // <script type="text/javascript" src="/js/themes/storefront/assets/js/navigation.min.js"></script> #}
-				{# // <script type="text/javascript" src="/js/jquery-3.6.3.min.js"></script> #}
-				{% block javascripts %}
-					{% block importmap %}
-						{{ importmap('app') }}
-					{% endblock %}
-					{{ encore_entry_script_tags('app') }}
+		{% block body %}{% endblock %}
 
-					{# // <script type="module" src="{{ asset('@symfony/stimulus-bundle/loader.js') }}"></script> #}
-				{% endblock %}
-			</div>
-		</div>
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('app') }}
+			{% endblock %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
 	</body>
 </html>

@@ -14,6 +14,11 @@ class LivreRepository extends ServiceEntityRepository
     parent::__construct($registry, Livre::class);
   }
 
+  public function getById(string $id): ?Livre
+  {
+    return $this->find($id);
+  }
+
   public function search(SearchDto $searchDto): array
   {
     $qb = $this->createQueryBuilder('l');
@@ -28,6 +33,18 @@ class LivreRepository extends ServiceEntityRepository
     }
 
     return $qb->getQuery()
+      ->getResult();
+  }
+
+  public function getLikeArticles(Livre $livre): array
+  {
+    return $this->createQueryBuilder('l')
+      ->andWhere('l.categorie = :category')
+      ->setParameter('category', $livre->getCategorie())
+      ->andWhere('l.id != :id')
+      ->setParameter('id', $livre->getId())
+      ->setMaxResults(2)
+      ->getQuery()
       ->getResult();
   }
 }

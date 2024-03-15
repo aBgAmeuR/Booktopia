@@ -31,25 +31,40 @@ class AppFixtures extends Fixture
 				$livre = new Livre();
 				$livre->setId($book['id']);
 				$livre->setTitre($book['volumeInfo']['title']);
-				if (isset($book['volumeInfo']['authors'][0]))
-				$livre->setAuteur($book['volumeInfo']['authors'][0]);
+				if (isset ($book['volumeInfo']['authors'][0]))
+					$livre->setAuteur($book['volumeInfo']['authors'][0]);
+				else
+					continue;
 				$livre->setEditeur($book['volumeInfo']['publisher']);
-				if (isset($book['volumeInfo']['publishedDate']))
+				if (isset ($book['volumeInfo']['publishedDate']))
 					$livre->setDateDePublication($book['volumeInfo']['publishedDate']);
-				if (isset($book['volumeInfo']['industryIdentifiers'][0]['identifier']))
+				else
+					continue;
+				if (isset ($book['volumeInfo']['industryIdentifiers'][0]['identifier']))
 					$livre->setIsbn($book['volumeInfo']['industryIdentifiers'][0]['identifier']);
-				if (isset($book['volumeInfo']['pageCount']))
+				else
+					continue;
+				if (isset ($book['volumeInfo']['pageCount']))
 					$livre->setNbPages($book['volumeInfo']['pageCount']);
-				if (isset($book['volumeInfo']['description']))
+				else
+					continue;
+				if (isset ($book['volumeInfo']['description']))
 					$livre->setResume($book['volumeInfo']['description']);
-				if (isset($book['saleInfo']['listPrice']['amount']))
+				else
+					continue;
+				if (isset ($book['saleInfo']['listPrice']['amount']))
 					$livre->setPrix($book['saleInfo']['listPrice']['amount']);
-				else continue;
-				if (isset($book['saleInfo']['retailPrice']['amount']))
-				$livre->setDisponibilite($book['saleInfo']['retailPrice']['amount']);
+				else
+					continue;
+				if (isset ($book['saleInfo']['retailPrice']['amount']))
+					$livre->setDisponibilite($book['saleInfo']['retailPrice']['amount']);
+				else
+					continue;
 				$livre->setImage($book['volumeInfo']['imageLinks']['thumbnail']);
-				if (isset($book['volumeInfo']['categories'][0]))
+				if (isset ($book['volumeInfo']['categories'][0]))
 					$livre->setCategorie($book['volumeInfo']['categories'][0]);
+				else
+					continue;
 
 				$manager->persist($livre);
 			}
