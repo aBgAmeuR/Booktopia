@@ -83,7 +83,7 @@
       "assets:install %PUBLIC_DIR%": "symfony-cmd",
       "importmap:install": "symfony-cmd"
     },
-    "css": "symfony console tailwind:build | symfony console asset-map:compile",
+    "css": "php bin/console tailwind:build | php bin/console asset-map:compile",
     "post-install-cmd": [
       "@auto-scripts"
     ],
