@@ -22,7 +22,7 @@ class Commande
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: LignePanier::class, cascade: ['persist', 'remove'])]
-    private Collection $lineItems;
+    private Collection $lignePanier;
 
     #[ORM\Column]
     private ?string $status = null;
