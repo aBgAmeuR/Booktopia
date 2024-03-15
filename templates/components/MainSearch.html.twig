@@ -1,4 +1,4 @@
-{# <div {{attributes}}>
+<div {{attributes}}>
 	{{ form_start(form, {
         attr: {
             'data-action': 'live#action',
@@ -15,20 +15,4 @@
 
 	{{ form_end(form) }}
 
-</div> #}
-
-
-<div{{ attributes }}>
-	{{ form_start(form, {
-    attr: {
-        'data-action': 'live#action',
-        'data-action-name': 'prevent|save'
-    },
-}) }}
-
-
-	{{ form_row(form.search) }}
-
-	<button>Save</button>
-	{{ form_end(form) }}
 </div>

@@ -28,14 +28,14 @@ final class MainSearch extends AbstractController
     }
 
 
-    // #[LiveAction]
-    // public function save()
-    // {
-    //     $this->submitForm();
+    #[LiveAction]
+    public function save()
+    {
+        $this->submitForm();
 
-    //     /** @var SearchDto $searchDto */
-    //     $this->searchDto = $this->getForm()->getData();
+        /** @var SearchDto $searchDto */
+        $this->searchDto = $this->getForm()->getData();
 
-    //     return $this->redirectToRoute('app_home', $this->searchDto->generateQueryParameters());
-    // }
+        return $this->redirectToRoute('app_search', $this->searchDto->generateQueryParameters());
+    }
 }
