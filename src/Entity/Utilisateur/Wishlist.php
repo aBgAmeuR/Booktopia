@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Utilisateur;
 
 use App\Entity\Catalogue\Article;
 use App\Repository\WishlistRepository;

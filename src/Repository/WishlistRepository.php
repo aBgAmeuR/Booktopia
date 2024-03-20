@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Wishlist;
+use App\Entity\Utilisateur\Wishlist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
