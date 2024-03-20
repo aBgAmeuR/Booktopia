@@ -3,6 +3,8 @@
 namespace App\Entity\Utilisateur;
 
 use App\Entity\Panier\LignePanier;
+use App\Entity\Utilisateur\Utilisateur;
+use App\Entity\Utilisateur\Adresse;
 use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,8 +21,7 @@ class Commande
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
-    
-    private ?LignePanier $lignePanier = null; 
+
 
     #[ORM\Column]
     private ?string $status = null;
@@ -35,10 +36,17 @@ class Commande
     #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $date = null;
 
+    // Ajoutez cette propriété
+    /**
+     * @var Collection|LignePanier[]
+     */
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: LignePanier::class, cascade: ['persist', 'remove'])]
+    private Collection $lineItems;
+
     public function __construct()
     {
-        $this->lineItems = new Collection();
-        $this->date = new \DateTime(); // Initialize with the current date by default
+        $this->lineItems = new ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     public function getId(): ?int
@@ -110,23 +118,25 @@ class Commande
         return $this->lineItems;
     }
 
-    // public function addLineItem(LignePanier $lineItem): self
-    // {
-    //     if (!$this->lineItems->contains($lineItem)) {
-    //         $this->lineItems[] = $lineItem;
-    //         $lineItem->setCommande($this);
-    //     }
-    //     return $this;
-    // }
 
-    // public function removeLineItem(LignePanier $lineItem): self
-    // {
-    //     if ($this->lineItems->removeElement($lineItem)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($lineItem->getCommande() === $this) {
-    //             $lineItem->setCommande(null);
-    //         }
-    //     }
-    //     return $this;
-    // }
+    public function addLineItem(LignePanier $lineItem): self
+    {
+        if (!$this->lineItems->contains($lineItem)) {
+            $this->lineItems[] = $lineItem;
+            $lineItem->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLineItem(LignePanier $lineItem): self
+    {
+        if ($this->lineItems->removeElement($lineItem)) {
+            // set the owning side to null (unless already changed)
+            if ($lineItem->getCommande() === $this) {
+                $lineItem->setCommande(null);
+            }
+        }
+        return $this;
+    }
 }

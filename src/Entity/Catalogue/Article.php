@@ -23,7 +23,7 @@ class Article
 
     #[ORM\Column(name: 'disponibilite')]
     private ?int $disponibilite = null;
-	
+
     #[ORM\Column(length: 255, name: 'image')]
     private ?string $image = null;
 
@@ -31,7 +31,7 @@ class Article
     {
         return $this->id;
     }
-	
+
     public function setId(string $id): static
     {
         $this->id = $id;
