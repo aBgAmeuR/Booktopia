@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<twig:Header is_logged_in="0" :searchdto="searchDto"></twig:Header>
+	<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
 
 	<main class="w-full max-w-[960px] my-5 mx-auto p-4">
 		<div class="flex items-center justify-center flex-col gap-8 rounded-base w-full h-80 bg-[url('/images/home_main_bg.png')] bg-center bg-cover">
@@ -35,6 +35,14 @@
 							<div class="text-secondary text-sm">{{ product.prix }}€</div>
 						</main>
 					</a>
+				</article>
+			{% endfor %}
+		</div>
+
+		<div>
+			{% for user in users %}
+				<article class="h-full">
+					<p>{{ user.email }}</p>
 				</article>
 			{% endfor %}
 		</div>

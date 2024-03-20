@@ -5,6 +5,10 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
+        user_provider:
+            entity:
+                class: App\Entity\Utilisateur\Utilisateur
+                property: email 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -12,6 +16,17 @@ security:
         main:
             lazy: true
             provider: users_in_memory
+            custom_authenticator: App\Security\UsersAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: homepage
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

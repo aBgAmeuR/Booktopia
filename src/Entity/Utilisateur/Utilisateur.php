@@ -1,39 +1,45 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Utilisateur;
 
 use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-class Utilisateur
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(type: 'integer')]
+    private int $id;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $name;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    private ?string $email;
+
+    #[ORM\Column(type: 'string')]
+    private string $password;
+
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
 
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Commande::class)]
     private Collection $commandes;
-
-    #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'utilisateurs')]
-    private Collection $roles;
-
+    
     #[ORM\OneToOne(mappedBy: 'utilisateur', targetEntity: Wishlist::class, cascade: ['persist', 'remove'])]
     private ?Wishlist $wishlist = null;
 
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
-        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,6 +69,23 @@ class Utilisateur
         return $this;
     }
 
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
     // Commandes
     public function getCommandes(): Collection
     {
@@ -89,26 +112,19 @@ class Utilisateur
         return $this;
     }
 
-    // Roles
-    public function getRoles(): Collection
+    public function getRoles(): array
     {
-        return $this->roles;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function addRole(Role $role): self
+    public function setRoles(array $roles): self
     {
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
-            $role->addUtilisateur($this);
-        }
-        return $this;
-    }
+        $this->roles = $roles;
 
-    public function removeRole(Role $role): self
-    {
-        if ($this->roles->removeElement($role)) {
-            $role->removeUtilisateur($this);
-        }
         return $this;
     }
 
@@ -132,5 +148,11 @@ class Utilisateur
 
         $this->wishlist = $wishlist;
         return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }

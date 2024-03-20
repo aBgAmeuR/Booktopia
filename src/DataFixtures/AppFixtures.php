@@ -28,43 +28,31 @@ class AppFixtures extends Fixture
 			$books = array_merge($books1['items'], $books2['items'], $books3['items']);
 
 			foreach ($books as $book) {
+				if ( !isset ($book['volumeInfo']['authors'][0])
+					|| !isset ($book['volumeInfo']['publishedDate'])
+					|| !isset ($book['volumeInfo']['industryIdentifiers'][0]['identifier'])
+					|| !isset ($book['volumeInfo']['pageCount'])
+					|| !isset ($book['volumeInfo']['description'])
+					|| !isset ($book['saleInfo']['listPrice']['amount'])
+					|| !isset ($book['volumeInfo']['imageLinks']['thumbnail'])
+					|| !isset ($book['volumeInfo']['categories'][0])
+				) {
+					continue;
+				}
+
 				$livre = new Livre();
 				$livre->setId($book['id']);
 				$livre->setTitre($book['volumeInfo']['title']);
-				if (isset ($book['volumeInfo']['authors'][0]))
-					$livre->setAuteur($book['volumeInfo']['authors'][0]);
-				else
-					continue;
+				$livre->setAuteur($book['volumeInfo']['authors'][0]);
 				$livre->setEditeur($book['volumeInfo']['publisher']);
-				if (isset ($book['volumeInfo']['publishedDate']))
-					$livre->setDateDePublication($book['volumeInfo']['publishedDate']);
-				else
-					continue;
-				if (isset ($book['volumeInfo']['industryIdentifiers'][0]['identifier']))
-					$livre->setIsbn($book['volumeInfo']['industryIdentifiers'][0]['identifier']);
-				else
-					continue;
-				if (isset ($book['volumeInfo']['pageCount']))
-					$livre->setNbPages($book['volumeInfo']['pageCount']);
-				else
-					continue;
-				if (isset ($book['volumeInfo']['description']))
-					$livre->setResume($book['volumeInfo']['description']);
-				else
-					continue;
-				if (isset ($book['saleInfo']['listPrice']['amount']))
-					$livre->setPrix($book['saleInfo']['listPrice']['amount']);
-				else
-					continue;
-				if (isset ($book['saleInfo']['retailPrice']['amount']))
-					$livre->setDisponibilite($book['saleInfo']['retailPrice']['amount']);
-				else
-					continue;
+				$livre->setDateDePublication($book['volumeInfo']['publishedDate']);
+				$livre->setIsbn($book['volumeInfo']['industryIdentifiers'][0]['identifier']);
+				$livre->setNbPages($book['volumeInfo']['pageCount']);
+				$livre->setResume($book['volumeInfo']['description']);
+				$livre->setPrix($book['saleInfo']['listPrice']['amount']);
+				$livre->setDisponibilite(rand(5, 15));
 				$livre->setImage($book['volumeInfo']['imageLinks']['thumbnail']);
-				if (isset ($book['volumeInfo']['categories'][0]))
-					$livre->setCategorie($book['volumeInfo']['categories'][0]);
-				else
-					continue;
+				$livre->setCategorie($book['volumeInfo']['categories'][0]);
 
 				$manager->persist($livre);
 			}

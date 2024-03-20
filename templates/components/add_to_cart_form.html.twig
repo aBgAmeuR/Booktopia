@@ -1,0 +1,15 @@
+<div {{ stimulus_controller('symfony/ux-live-component', {
+    initialState: { 'unitPrice': unitPrice, 'quantity': quantity }
+}) }}>
+    <input
+        type="number"
+        value="{{ quantity }}"
+        data-model="quantity"
+        data-action="live#update"
+        min="1"
+    />
+
+    <button type="submit">Ajouter au panier</button>
+
+    <p>Prix total: <span data-live-value="subtotal">{{ this.getSubtotal() }}</span> €</p>
+</div>

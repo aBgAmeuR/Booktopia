@@ -28,7 +28,7 @@
 							{% else %}
 							<td>Inexistante</td>
 							{% endif %}
-							<td data-colname="Date de parution">{{ article.dateDeParution }}</td>
+							<td data-colname="Date de parution">{{ article.dateDePublication }}</td>
 							<td data-colname="Prix" class="product-price">{{ article.prix }}</td>
 							<td><button onclick="window.location.href='/admin/livres/modifier?id={{ article.id }}'">Modifier</button></td>
 							<td><button data-iddelete="{{ article.id }}">Supprimer</button></td>

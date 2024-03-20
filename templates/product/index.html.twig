@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<twig:Header is_logged_in="0" :searchdto="searchDto"></twig:Header>
+	<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
 
 	<main class="w-full max-w-[960px] my-5 mx-auto p-4 grid grid-cols-[auto_200px] gap-8">
 		<div>
@@ -46,11 +46,20 @@
 		</div>
 		<div>
 			<h2 class="font-bold text-lg text-primary">Ajouter au panier</h2>
-			<div
-				class="mt-2">
-				{# <form action="{{ path('add_to_cart') }}" method="post"> #}
+			<div class="mt-2">
+				<form class="w-full mt-2">
+					<input type="hidden" name="id" value="{{ livre.id }}">
+					<div class="flex gap-2 items-center">
+						<label>Quantité</label>
+						<input type="number" value="1" name="quantity" class="w-[68px] rounded-base px-3 py-1 border border-primary" min="1" step="1">
+					</div>
+					<p class="text-primary mt-2">
+						Total:
+						<span id="total-price"></span>€
+					</p>
 
-				<twig:AddToCardForm :id="livre.id" :unitprice="livre.prix"></twig:AddToCardForm>
+					<button type="submit" class="bg-primary text-white rounded-base py-2 w-full mt-2">Ajouter au panier</button>
+				</form>
 			</div>
 			{% if livresLike is not null %}
 				<h2 class="font-bold text-lg text-primary mt-5">Livres similaires</h2>
@@ -71,4 +80,25 @@
 				</div>
 			{% endif %}
 		</main>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+const prixUnitaire = {{ livre.prix }};
+const quantiteInput = document.querySelector('input[name="quantity"]');
+const totalSpan = document.querySelector('#total-price');
+
+// Fonction pour mettre à jour le prix total
+function updateTotal() {
+const quantite = quantiteInput.value;
+const total = (prixUnitaire * quantite).toFixed(2); // Arrondi à deux décimales
+totalSpan.textContent = total;
+}
+
+// Mettre à jour le total initial
+updateTotal();
+
+// Écouteur d'événement pour la modification de la quantité
+quantiteInput.addEventListener('input', updateTotal);
+});
+		</script>
 	{% endblock %}

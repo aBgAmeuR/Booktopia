@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Utilisateur;
 
 use App\Repository\AdresseRepository;
 use Doctrine\ORM\Mapping as ORM;

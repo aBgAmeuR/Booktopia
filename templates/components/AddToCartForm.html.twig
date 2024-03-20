@@ -1,0 +1,60 @@
+{#<div {{attributes}}>
+	{{ stimulus_controller('symfony/ux-live-component', {
+        
+        attr: {
+            'data-action': 'live#action',
+            'data-action-name': 'prevent|save',
+            'class': 'w-full mt-2',
+        }, initialState: { 
+        quantity: quantity, 
+        pricePerUnit: pricePerUnit, 
+        totalPrice: getTotalPrice() 
+    } 
+    }) }}
+
+	 {{ form_row(form.id) }} 
+
+	<div class="flex gap-2 items-center">
+		<label>Quantité</label>
+
+        <input type="number" value="{{ quantity }}" name="quantity" class="w-[68px] rounded-base px-3 py-1 border border-primary" data-action="live#update" data-model="quantity" min="1" step="1">
+	</div>
+	<p class="text-primary mt-2">
+         Total: <span data-live-value="totalPrice">{{ getTotalPrice() }}</span>€ 
+    </p>
+
+
+<button type="submit" class="bg-primary text-white rounded-base py-2 w-full mt-2">Ajouter au panier</button>
+
+{{ form_end(form) }}</div>
+#}
+
+
+<div {{ stimulus_controller('symfony/ux-live-component', { 
+    initialState: { 
+        quantity: quantity, 
+        unitPrice: unitPrice, 
+        totalPrice: getTotalPrice() 
+    } 
+}) }}>
+    {{ form_start(form, {
+        attr: {
+            'data-action': 'live#update',
+            'class': 'w-full mt-2',
+        },
+    }) }}
+
+    {{ form_row(form.id) }}
+
+    <div class="flex gap-2 items-center">
+        <label>Quantité</label>
+        <input type="number" value="{{ quantity }}" name="quantity" class="w-[68px] rounded-base px-3 py-1 border border-primary" data-action="live#update" data-model="quantity" min="1" step="1">
+    </div>
+    <p class="text-primary mt-2">
+        Total: <span data-live-value="totalPrice">{{ getTotalPrice() }}</span>€
+    </p>
+
+    <button type="submit" class="bg-primary text-white rounded-base py-2 w-full mt-2">Ajouter au panier</button>
+
+    {{ form_end(form) }}
+</div>
