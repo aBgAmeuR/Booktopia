@@ -2,6 +2,8 @@ security:
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        App\Entity\Utilisateur\Utilisateur:
+            algorithm: auto
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         users_in_memory: { memory: null }
@@ -15,7 +17,7 @@ security:
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: user_provider
             custom_authenticator: App\Security\UsersAuthenticator
             logout:
                 path: app_logout

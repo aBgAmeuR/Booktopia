@@ -21,13 +21,10 @@ class DefaultController extends AbstractController
         $categories = $livreRepository->getCategories(5);
         $featuredProducts = $livreRepository->getFeaturedProducts(5);
 
-        $users = $utilisateurRepository->findAll();
-
         return $this->render('default/index.html.twig', [
             'searchDto' => $searchDto,
             'categories' => $categories,
             'featuredProducts' => $featuredProducts,
-            'users' => $users
         ]);
     }
 }

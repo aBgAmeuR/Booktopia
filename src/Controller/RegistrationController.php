@@ -21,24 +21,19 @@ class RegistrationController extends AbstractController
         $user = new Utilisateur();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('plainPassword')->getData()
                 )
             );
-            
-            try {
-                $entityManager->persist($user);
-                $entityManager->flush();
-            } catch (\Exception $e) {
-                // Vous pourriez logger l'exception ou la traiter selon le cas.
-                $this->addFlash('error', 'Une erreur est survenue lors de l"enregistrement.');
-                // Retourner une réponse ou rediriger l'utilisateur vers une page d'erreur.
-            }
+
+            $entityManager->persist($user);
+            $entityManager->flush();
 
             return $userAuthenticator->authenticateUser(
                 $user,
