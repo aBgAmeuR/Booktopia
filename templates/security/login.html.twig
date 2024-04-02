@@ -1,35 +1,119 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!
-{% endblock %}
+{% block title %}Se connecter{% endblock %}
 
 {% block body %}
-	<main class="grid grid-cols-[minmax(250px,35%)_1fr] w-full h-full">
-		<form method="post" class="flex items-center justify-center px-4 gap-2 flex-col h-screen">
-			{% if error %}
-				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-			{% endif %}
+	<section class="bg-white">
+		<div class="lg:grid lg:min-h-screen lg:grid-cols-12">
+			<section class="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+				<img alt="" src="https://images.unsplash.com/photo-1628021118839-63bcd721cb77?ixlib=rb-1.2.1&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" class="absolute inset-0 h-full w-full object-cover object-bottom opacity-80"/>
 
-			<h1 class="font-bold text-lg text-primary mb-2">Se connecter</h1>
-			<div class="flex flex-col gap-1 w-full max-w-80">
-				<label for="inputEmail" class="text-base text-primary">Email</label>
-				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="w-full rounded-base text-sm font-bold bg-secondary ring-transparent ring-0 px-4 h-10 focus:outline-none focus:shadow-none" autocomplete="email" placeholder="Email" required autofocus>
-			</div>
-			<div class="flex flex-col gap-1 w-full max-w-80">
-				<label for="inputPassword" class="text-base text-primary">Mot de passe</label>
-				<input type="password" name="password" id="inputPassword" class="w-full rounded-base text-sm font-bold bg-secondary ring-transparent ring-0 px-4 h-10 focus:outline-none focus:shadow-none" autocomplete="current-password" placeholder="Mot de passe" required>
-			</div>
+				<div class="hidden lg:relative lg:block lg:p-12">
+					<a class="block text-white" href="/">
+						<span class="sr-only">Home</span>
+						<svg width="42" height="35" viewbox="0 0 42 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g clip-path="url(#clip0_130_4)">
+								<path d="M21.0297 13.0641L3.277 2.54401C-7.57181 19.6392 11.1671 34.7618 21.0297 34.1043C31.5499 34.4332 49.3025 19.6392 38.7823 2.54401L21.0297 13.0641Z" fill="white"/>
+							</g>
+							<defs>
+								<clipPath id="clip0_130_4">
+									<rect width="42" height="34.125" fill="white"/>
+								</clipPath>
+							</defs>
+						</svg>
+
+					</a>
+
+					<h2 class="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+						Bienvenue sur Booktopia
+					</h2>
+
+					<p class="mt-4 leading-relaxed text-white/90">
+						Booktopia est une plateforme d'achat de livres. Vous pouvez y trouver des livres de tout genre et de tout auteur.
+					</p>
+				</div>
+			</section>
+
+			<main class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+				<div class="max-w-xl lg:max-w-3xl">
+					<div class="relative -mt-16 block lg:hidden">
+						<a class="inline-flex size-16 items-center justify-center rounded-full bg-white text-primary sm:size-20" href="/">
+							<span class="sr-only">Home</span>
+							<svg width="42" height="35" viewbox="0 0 42 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g clip-path="url(#clip0_130_2)">
+									<path d="M21.0297 13.3766L3.277 2.85651C-7.57181 19.9517 11.1671 35.0743 21.0297 34.4168C31.5499 34.7457 49.3025 19.9517 38.7823 2.85651L21.0297 13.3766Z" fill="#141414"/>
+								</g>
+								<defs>
+									<clipPath id="clip0_130_2">
+										<rect width="42" height="34.125" fill="white" transform="translate(0 0.3125)"/>
+									</clipPath>
+								</defs>
+							</svg>
+						</a>
+
+						<h1 class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
+							Bienvenue sur Booktopia
+						</h1>
+
+						<p class="mt-4 leading-relaxed text-gray-500">
+							Booktopia est une plateforme d'achat de livres. Vous pouvez y trouver des livres de tout genre et de tout auteur.
+						</p>
+					</div>
+
+					<form method="post" class="mt-8 flex flex-col gap-6">
+						<h2 class="hidden lg:block lg:text-center lg:mb-2 lg:text-2xl lg:font-bold lg:text-primary sm:text-3xl md:text-4xl">
+							Booktopia
+						</h2>
+						{% if error %}
+							<div role="alert" class="w-full rounded border-s-4 border-red-500 bg-red-50 p-4">
+								<div class="flex items-center gap-2 text-red-800">
+									<svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+										<path fill-rule="evenodd" d="M9.401 3.003c1.155-2 4.043-2 5.197 0l7.355 12.748c1.154 2-.29 4.5-2.599 4.5H4.645c-2.309 0-3.752-2.5-2.598-4.5L9.4 3.003zM12 8.25a.75.75 0 01.75.75v3.75a.75.75 0 01-1.5 0V9a.75.75 0 01.75-.75zm0 8.25a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd"/>
+									</svg>
+
+									<strong class="block font-medium">
+										Erreur d'authentification
+									</strong>
+								</div>
+
+								<p class="mt-2 text-sm text-red-700">
+									{{ error.messageKey|trans(error.messageData, 'security') }}
+								</p>
+							</div>
+						{% endif %}
+
+						<div class="col-span-6">
+							<label for="inputEmail" class="block text-sm font-medium text-gray-700">
+								Email
+							</label>
+
+							<input type="email" id="inputEmail" name="email" value="{{ last_username }}" class="mt-1 w-full rounded-base text-sm font-bold bg-secondary ring-transparent ring-0 px-4 h-10 focus:outline-none shadow-sm" required autocomplete="email" autofocus placeholder="Email"/>
+						</div>
+
+						<div class="col-span-6">
+							<label for="inputPassword" class="block text-sm font-medium text-gray-700">
+								Mot de passe
+							</label>
+
+							<input type="password" id="inputPassword" name="password" class="mt-1 w-full rounded-base text-sm font-bold bg-secondary ring-transparent ring-0 px-4 h-10 focus:outline-none  shadow-sm" required autocomplete="current-password" placeholder="Mot de passe"/>
+						</div>
+
+						<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+						<div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+							<button class="inline-block shrink-0 rounded-md border border-primary bg-primary px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary">
+								Se connecter
+							</button>
+
+							<p class="mt-4 text-sm text-gray-500 sm:mt-0">
+								Pas encore inscrit ?
+								<a href="{{ path('app_register') }}" class="text-gray-700 underline">Créer un compte</a>.
+							</p>
+						</div>
+					</form>
+				</div>
+			</main>
 		</div>
+	</section>
 
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-		<button class="bg-primary text-white rounded-base py-2 w-full mt-2 max-w-80" type="submit">
-			Se connecter
-		</button>
-	</form>
-	{# <div class="text-center">
-				<a href="{{ path('app_register') }}">Pas encore inscrit ?</a>
-			</div> #}
-	<div class="bg-slate-500">
-    </div>
 </main>{% endblock %}
