@@ -1,2 +1,0 @@
-Line 32 - font-size: 16px;
-Line 32 + font-size: 1px;
