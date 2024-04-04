@@ -25,11 +25,19 @@ final class FilterProducts
     #[LiveProp]
     public ?array $products = [];
 
+    /**
+     * @var string[]
+     */
+    #[LiveProp]
+    public ?array $categories = []; 
+
+
     #[LiveProp()]
     public int $results = 0;
 
     public function __construct(private LivreRepository $livreRepository)
     {
+        
     }
 
     public function mount(SearchDto $searchDto)
@@ -49,5 +57,24 @@ final class FilterProducts
     {
         $this->products = $this->livreRepository->search($this->searchDto);
         $this->results = count($this->products);
+        $this->categories = $this->getCategoryFromProducts();
+    }
+
+    private function getCategoryFromProducts(): array
+    {
+        $categoryCount = [];
+        foreach ($this->products as $product) {
+            $category = $product->getCategorie();
+            if (!empty ($category)) {
+                if (isset ($categoryCount[$category])) {
+                    $categoryCount[$category]++;
+                } else {
+                    $categoryCount[$category] = 1;
+                }
+            }
+        }
+
+        arsort($categoryCount);
+        return array_keys(array_slice($categoryCount, 0, 5));
     }
 }

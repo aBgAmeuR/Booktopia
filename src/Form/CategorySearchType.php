@@ -13,7 +13,11 @@ class CategorySearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('category', HiddenType::class);
+            ->add('category', HiddenType::class, [
+                'required' => false,
+                'label' => false,
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,6 +1,14 @@
 <div{{attributes}}>
 	<section class="filters">
-		<twig:FilterButtons :searchDto="searchDto" :products="products"></twig:FilterButtons>
+		<div class="flex gap-3 my-6">
+			{% for category in categories %}
+				<form action="{{ path('app_search') }}" method="get">
+					<input type="hidden" name="search" value="{{ searchDto.search }}">
+					<input type="hidden" name="category" value="{{ category }}">
+					<button type="submit" class="bg-secondary rounded-xl px-3 py-1 text-sm font-medium">{{ category }}</button>
+				</form>
+			{% endfor %}
+		</div>
 	</section>
 	<twig:ProductCards :products="products" :results="results"></twig:ProductCards>
 </div>
