@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 use App\Entity\Catalogue\Livre;
+use App\Entity\Utilisateur\Utilisateur;
 
 use Psr\Log\LoggerInterface;
 
@@ -56,6 +57,14 @@ class AppFixtures extends Fixture
 
 				$manager->persist($livre);
 			}
+
+			$utilisateur = new Utilisateur();
+			$utilisateur->setName("admin");
+			$utilisateur->setEmail("admin@admin.com");
+			$utilisateur->setPassword(password_hash("admin", PASSWORD_DEFAULT));
+			$utilisateur->setRoles(["ROLE_ADMIN"]);
+
+			$manager->persist($utilisateur);
 
 			$manager->flush();
 		} else {

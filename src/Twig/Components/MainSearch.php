@@ -23,7 +23,6 @@ final class MainSearch extends AbstractController
 
     protected function instantiateForm(): FormInterface
     {
-        // we can extend AbstractController to get the normal shortcuts
         return $this->createForm(MainSearchType::class, $this->searchDto);
     }
 

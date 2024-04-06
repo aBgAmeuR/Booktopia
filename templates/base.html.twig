@@ -3,20 +3,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Welcome!</title>
-		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+		<link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}"/>
 		<title>
-			{% block title %}Booktopia
-			{% endblock %}
+			{% block title %}Booktopia{% endblock %}
 		</title>
 		{% block stylesheets %}
-			{# <link rel="stylesheet" href="{{ asset('styles/app.tailwind.css') }}"> #}
-			<link rel="preconnect" href="https://fonts.googleapis.com">
-			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 			<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 	</head>
 	<body>
 		{% block body %}{% endblock %}

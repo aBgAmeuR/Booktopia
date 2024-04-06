@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SearchController!
-{% endblock %}
-
 {% block body %}
 	<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchDto="searchDto"></twig:Header>
 

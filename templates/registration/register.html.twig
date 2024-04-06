@@ -1,20 +1,93 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Créer un compte
+{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+	<section class="bg-white">
+		<div class="lg:grid lg:min-h-screen lg:grid-cols-12">
+			<section class="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+				<img alt="" src="https://images.unsplash.com/photo-1628021118839-63bcd721cb77?ixlib=rb-1.2.1&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" class="absolute inset-0 h-full w-full object-cover object-bottom opacity-80"/>
 
-    {{ form_errors(registrationForm) }}
+				<div class="hidden lg:relative lg:block lg:p-12">
+					<a class="block text-white" href="/">
+						<span class="sr-only">Home</span>
+						<svg width="42" height="35" viewbox="0 0 42 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g clip-path="url(#clip0_130_4)">
+								<path d="M21.0297 13.0641L3.277 2.54401C-7.57181 19.6392 11.1671 34.7618 21.0297 34.1043C31.5499 34.4332 49.3025 19.6392 38.7823 2.54401L21.0297 13.0641Z" fill="white"/>
+							</g>
+							<defs>
+								<clipPath id="clip0_130_4">
+									<rect width="42" height="34.125" fill="white"/>
+								</clipPath>
+							</defs>
+						</svg>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.name) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+					</a>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+					<h2 class="mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+						Bienvenue sur Booktopia
+					</h2>
+
+					<p class="mt-4 leading-relaxed text-white/90">
+						Booktopia est une plateforme d'achat de livres. Vous pouvez y trouver des livres de tout genre et de tout auteur.
+					</p>
+				</div>
+			</section>
+
+			<main class="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6">
+				<div class="max-w-xl lg:max-w-3xl">
+					<div class="relative -mt-16 block lg:hidden">
+						<a class="inline-flex size-16 items-center justify-center rounded-full bg-white text-primary sm:size-20" href="/">
+							<span class="sr-only">Home</span>
+							<svg width="42" height="35" viewbox="0 0 42 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g clip-path="url(#clip0_130_2)">
+									<path d="M21.0297 13.3766L3.277 2.85651C-7.57181 19.9517 11.1671 35.0743 21.0297 34.4168C31.5499 34.7457 49.3025 19.9517 38.7823 2.85651L21.0297 13.3766Z" fill="#141414"/>
+								</g>
+								<defs>
+									<clipPath id="clip0_130_2">
+										<rect width="42" height="34.125" fill="white" transform="translate(0 0.3125)"/>
+									</clipPath>
+								</defs>
+							</svg>
+						</a>
+
+						<h1 class="mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
+							Bienvenue sur Booktopia
+						</h1>
+
+						<p class="mt-4 leading-relaxed text-gray-500">
+							Booktopia est une plateforme d'achat de livres. Vous pouvez y trouver des livres de tout genre et de tout auteur.
+						</p>
+					</div>
+
+					{{ form_start(registrationForm, {'attr': {'class': 'mt-8 flex flex-col gap-6'}}) }}
+					<h2 class="hidden lg:block lg:text-center lg:mb-2 lg:text-2xl lg:font-bold lg:text-primary sm:text-3xl md:text-4xl">
+						Booktopia
+					</h2>
+
+					{{ form_row(registrationForm.name, {'attr': {'class': 'col-span-6 sm:col-span-3 mt-1 w-full rounded-base text-sm font-bold bg-secondary ring-transparent ring-0 px-4 h-10 focus:outline-none shadow-sm', 'id': 'FirstName'}, 'label': 'Prénom'}) }}
+					{{ form_row(registrationForm.email, {'attr': {'class': 'col-span-6 mt-1 w-full rounded-base text-sm font-bold bg-secondary ring-transparent ring-0 px-4 h-10 focus:outline-none shadow-sm', 'id': 'Email'}, 'label': 'Email'}) }}
+					{{ form_row(registrationForm.plainPassword.first, {'attr': {'class': 'col-span-6 sm:col-span-3 mt-1 w-full rounded-base text-sm font-bold bg-secondary ring-transparent ring-0 px-4 h-10 focus:outline-none shadow-sm', 'id': 'Password'}, 'label': 'Mot de passe'}) }}
+					{{ form_row(registrationForm.plainPassword.second, {'attr': {'class': 'col-span-6 sm:col-span-3 mt-1 w-full rounded-base text-sm font-bold bg-secondary ring-transparent ring-0 px-4 h-10 focus:outline-none shadow-sm', 'id': 'PasswordConfirmation'}, 'label': 'Confirmation du mot de passe'}) }}
+					<div class="flex items-center gap-2">
+                    {{ form_row(registrationForm.agreeTerms, {'attr': {'class': 'col-span-6 size-5 rounded-md border-gray-200 bg-white shadow-sm', 'id': 'MarketingAccept'}}) }}
+                    <p>J'accepte les conditions d'utilisation et la politique de confidentialité de Booktopia</p>
+                    </div>
+					<div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+						<button type="submit" class="inline-block shrink-0 rounded-md border border-primary bg-primary px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary">
+							Créer un compte
+						</button>
+						<p class="mt-4 text-sm text-gray-500 sm:mt-0">
+							Vous avez déjà un compte ?
+							<a href="{{ path('app_login') }}" class="text-gray-700 underline">
+								Connectez-vous
+							</a>.
+						</p>
+					</div>
+					{{ form_end(registrationForm) }}
+				</div>
+			</main>
+		</div>
+	</section>
 {% endblock %}

@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SearchController!
-{% endblock %}
-
 {% block body %}
 	<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
 
@@ -15,9 +12,10 @@
 		<h2 class="font-bold text-lg text-primary mt-5 mb-2">Catégories</h2>
 		<div class="grid grid-cols-5 gap-4">
 			{% for category in categories %}
-				<div class="rounded-base p-4 text-base font-bold border border-border">
-					{{ category.categorie }}
-				</div>
+				<form action="{{ path('app_search') }}" method="get">
+					<input type="hidden" name="category" value="{{ category.categorie }}">
+					<button type="submit" class="rounded-base p-4 text-base font-bold border border-border w-full h-full">{{ category.categorie }}</button>
+				</form>
 			{% endfor %}
 		</div>
 
