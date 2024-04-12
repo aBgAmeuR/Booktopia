@@ -13,6 +13,7 @@ use Psr\Log\LoggerInterface;
 use App\Entity\Catalogue\Article;
 use App\Entity\Panier\Panier;
 use App\Entity\Panier\LignePanier;
+use App\Repository\LivreRepository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\DTO\SearchDto;
@@ -25,17 +26,22 @@ class CartController extends AbstractController
     private EntityManagerInterface $entityManager;
     private LoggerInterface $logger;
 
-    private Panier $panier;
-    private $panierRepository;
+    private LivreRepository $livreRepository;
 
 
-    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger)
+
+
+
+    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger, LivreRepository $livreRepository,)
     {
         $this->entityManager = $entityManager;
         $this->logger = $logger;
+        $this->livreRepository = $livreRepository;
     }
 
-    #[Route('/cart', name: 'cart_index')]
+    /**
+     * @Route("/cart", name="cart_index")
+     */
     public function index(Request $request)
     {
         $searchDto ??= new SearchDto();
@@ -58,5 +64,21 @@ class CartController extends AbstractController
         $session->set('panier', $panier);
 
         return $panier;
+    }
+
+    /**
+     * @Route("/cart/add/{id}", name="add_to_cart", methods={"POST"})
+     */
+    public function add($id, Request $request)
+    {
+        $livre = $this->livreRepository->find($id);
+        if (!$livre) {
+            throw $this->createNotFoundException('Le livre demandé n\'existe pas');
+        }
+        $panier = $this->getPanierFromSession($request);
+        $panier->ajouterLigne($livre);
+        $searchDto ??= new SearchDto();
+
+        return $this->redirectToRoute('cart_index');
     }
 }

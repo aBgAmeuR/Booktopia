@@ -7,3 +7,8 @@ controllers:
 cart_index:
   path: /cart
   controller: App\Controller\CartController::index
+
+add_to_cart:
+    path: /cart/add/{id}
+    controller: App\Controller\CartController::add
+    methods: POST
