@@ -51,7 +51,7 @@
 		<div>
 			<h2 class="font-bold text-lg text-primary">Ajouter au panier</h2>
 			<div class="mt-2">
-				<form class="w-full mt-2">
+				<form method="post" action="{{ path('add_to_cart', {'id': livre.id}) }}" class="w-full mt-2">
 					<input type="hidden" name="id" value="{{ livre.id }}">
 					<div class="flex gap-2 items-center">
 						<label>Quantité</label>
@@ -62,7 +62,7 @@
 						<span id="total-price"></span>€
 					</p>
 
-					<button type="submit" class="bg-primary text-white rounded-base py-2 w-full mt-2">Ajouter au panier</button>
+					<button  type="submit" class="bg-primary text-white rounded-base py-2 w-full mt-2">Ajouter au panier</button>
 				</form>
 			</div>
 			{% if livresLike is not null %}
