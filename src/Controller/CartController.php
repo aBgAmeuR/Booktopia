@@ -135,46 +135,43 @@ class CartController extends AbstractController
 
     }
 
-    // #[Route('/commanderPanier', name: 'commanderPanier')]
-    // public function commanderPanierAction(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     $session = $request->getSession();
-    //     $panier = $session->get('panier');
+    #[Route('/commanderPanier', name: 'commanderPanier')]
+    public function commanderPanierAction(Request $request): Response
+    {
+        $session = $request->getSession();
+        $panier = $session->get('panier');
 
-    //     // Check if the cart is empty
-    //     if (!$panier || $panier->getLignesPanier()->count() == 0) {
-    //         $this->addFlash('warning', 'Votre panier est vide.');
-    //         return $this->redirectToRoute('cart_index');
-    //     }
+        if (!$panier || $panier->getLignesPanier()->count() == 0) {
+            $this->addFlash('warning', 'Votre panier est vide.');
+            return $this->redirectToRoute('cart_index');
+        }
 
-    //     $utilisateur = $this->getUser();
-    //     // Check if user is logged in
-    //     if (!$utilisateur) {
-    //         $this->addFlash('error', 'Vous devez être connecté pour passer une commande.');
-    //         return $this->redirectToRoute('login');
-    //     }
+        $utilisateur = $this->getUser();
+        if (!$utilisateur) {
+            $this->addFlash('error', 'Vous devez être connecté pour passer une commande.');
+            return $this->redirectToRoute('login');
+        }
 
+        $commande = new Commande();
+        $commande->setUtilisateur($utilisateur);
 
-    //     $commande = new Commande($utilisateur);
-    //     $commande->setUtilisateur($utilisateur);
+        foreach ($panier->getLignesPanier() as $lignePanier) {
+            $ligne = new LignePanier();
+            $ligne->setArticle($lignePanier->getArticle());
+            $ligne->setQuantite($lignePanier->getQuantite());
+            $ligne->setPrixUnitaire($lignePanier->getArticle()->getPrix());
+            $ligne->setPrixTotal($lignePanier->getPrixTotal());
+            $commande->addLineItem($ligne);
+        }
 
-    //     foreach ($panier->getLignesPanier() as $lignePanier) {
-    //         $ligne = new LignePanier();
-    //         $ligne->setArticle($lignePanier->getArticle());
-    //         $ligne->setQuantite($lignePanier->getQuantite());
-    //         $ligne->setPrixUnitaire($lignePanier->getArticle()->getPrix());
-    //         $ligne->setPrixTotal($lignePanier->getPrixTotal());
-    //         $commande->addLineItem($ligne);
-    //         $entityManager->persist($ligne);
-    //     }
+        $commande->setTotal($panier->getTotal());
 
-    //     $commande->setTotal($panier->getTotal());
-    //     $entityManager->persist($commande);
-    //     $entityManager->flush();
+        $session->set('panier', new Panier()); // Clear the cart after placing the order
+        $this->addFlash('success', 'Votre commande a été passée avec succès.');
 
-    //     $session->set('panier', new Panier()); // Clear the cart after placing the order
-    //     $this->addFlash('success', 'Votre commande a été passée avec succès.');
-
-    //     return $this->redirectToRoute('order_success', ['id' => $commande->getId()]);
-    // }
+        // Instead of redirecting, render the commande.html.twig with the commande details
+        return $this->render('commande.html.twig', [
+            'commande' => $commande
+        ]);
+    }
 }

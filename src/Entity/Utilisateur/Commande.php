@@ -44,11 +44,10 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: LignePanier::class, cascade: ['persist', 'remove'])]
     private Collection $lineItems;
 
-    public function __construct(Utilisateur $utilisateur)
+    public function __construct()
     {
         $this->lineItems = new ArrayCollection();
         $this->date = new \DateTime();
-        $this->utilisateur = $utilisateur;
     }
 
     public function getId(): ?int

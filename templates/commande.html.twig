@@ -17,16 +17,18 @@
             </tr>
         </thead>
         <tbody>
-            {% for ligne in commande.lignes %}
-            <tr>
-                <td>{{ ligne.produit.titre }}</td>
-                <td>{{ ligne.quantite }}</td>
-                <td>{{ ligne.produit.prix }}€</td>
-                <td>{{ ligne.total }}€</td>
-            </tr>
-            {% endfor %}
+           {% for ligne in commande.lineItems %}
+    <tr>
+        <td>{{ ligne.article.titre }}</td>
+        <td>{{ ligne.quantite }}</td>
+        <td>{{ ligne.prixUnitaire }}€</td>
+        <td>{{ ligne.prixTotal }}€</td>
+    </tr>
+{% endfor %}
         </tbody>
     </table>
     <p>Total de la commande : {{ commande.total }}€</p>
+    
+     <a href="{{ path('homepage') }}" class="btn btn-primary">Confirmer la commande</a>
 </main>
 {% endblock %}
