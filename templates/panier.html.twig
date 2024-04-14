@@ -46,9 +46,7 @@
 										<tbody>
 										{% for lignePanier in panier.lignesPanier %}
 											<tr class="woocommerce-cart-form__cart-item cart_item">
-												<td class="product-remove"><a class="remove"
-													title="Remove this item"
-													href="/supprimerLigne?id={{ lignePanier.article.id }}">×</a>
+												<td class="product-remove"><a class="remove" title="Remove this item" href="{{ path('supprimerLigne', {'id': lignePanier.article.id}) }}">×</a>
 												</td>
 												<td class="product-thumbnail"><img
 													class="attachment-shop_thumbnail wp-post-image" width="145"

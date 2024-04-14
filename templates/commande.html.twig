@@ -1,8 +1,32 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 				<header id="header" class="col-full">
-					<div id="logo">
-						<h1 class="site-title">Site web marchand</h1>
-					</div>
-				</header>
+    <div id="logo">
+        <h1 class="site-title">Site web marchand</h1>
+    </div>
+</header>
+<main>
+    <h2>Commande #{{ commande.id }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ligne in commande.lignes %}
+            <tr>
+                <td>{{ ligne.produit.titre }}</td>
+                <td>{{ ligne.quantite }}</td>
+                <td>{{ ligne.produit.prix }}€</td>
+                <td>{{ ligne.total }}€</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>Total de la commande : {{ commande.total }}€</p>
+</main>
 {% endblock %}

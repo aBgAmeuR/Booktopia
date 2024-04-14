@@ -44,10 +44,11 @@ class Commande
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: LignePanier::class, cascade: ['persist', 'remove'])]
     private Collection $lineItems;
 
-    public function __construct()
+    public function __construct(Utilisateur $utilisateur)
     {
         $this->lineItems = new ArrayCollection();
         $this->date = new \DateTime();
+        $this->utilisateur = $utilisateur;
     }
 
     public function getId(): ?int
@@ -63,7 +64,12 @@ class Commande
 
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
+        if ($utilisateur === null) {
+            throw new \InvalidArgumentException('Utilisateur cannot be null');
+        }
+
         $this->utilisateur = $utilisateur;
+
         return $this;
     }
 
