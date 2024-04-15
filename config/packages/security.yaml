@@ -43,7 +43,6 @@ security:
         - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/wishlist, roles: ROLE_USER }
 
-    enable_authenticator_manager: true
 when@test:
     security:
         password_hashers:
