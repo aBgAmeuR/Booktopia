@@ -3,6 +3,7 @@
 {% block body %}
 	<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
 	<section class="mx-auto px-4 w-full max-w-xl my-8">
+        <h1 class="text-2xl font-extrabold text-primary line-clamp-1">Votre liste de souhaits</h1>
 		{% for product in articles %}
 			<div class="flex justify-between flex-row items-center border-b-2 border-gray-200 py-2">
 				<div class="flex justify-between gap-4 p-4 rounded-base hover:bg-secondary h-full w-full group">
@@ -20,20 +21,20 @@
 						<form action="{{ path('app_wishlist_delete') }}" method="post" class="z-30">
 							<input type="hidden" name="articleId" value="{{ product.id }}">
 							<button class="wishlist-toggle p-3 rounded-md bg-secondary group-hover:bg-white" type="submit">
-								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heart-off"><line x1="2" y1="2" x2="22" y2="22"/><path d="M16.5 16.5 12 21l-7-7c-1.5-1.45-3-3.2-3-5.5a5.5 5.5 0 0 1 2.14-4.35"/><path d="M8.76 3.1c1.15.22 2.13.78 3.24 1.9 1.5-1.5 2.74-2 4.5-2A5.5 5.5 0 0 1 22 8.5c0 2.12-1.3 3.78-2.67 5.17"/></svg>
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
 							</button>
 						</form>
-                        <a href="/product/{{ product.id }}" class="p-3 rounded-md bg-secondary group-hover:bg-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M22 12c0 2.5-4 7-10 7s-10-4.5-10-7 4-7 10-7 10 4.5 10 7z"/><circle cx="12" cy="12" r="2"/></svg>
-                        </a>
+						<a href="/product/{{ product.id }}" class="p-3 rounded-md bg-secondary group-hover:bg-white">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye"><path d="M22 12c0 2.5-4 7-10 7s-10-4.5-10-7 4-7 10-7 10 4.5 10 7z"/><circle cx="12" cy="12" r="2"/></svg>
+						</a>
 					</div>
 				</div>
 			</div>
 		{% endfor %}
-        {% if articles|length == 0 %}
-            <div class="flex justify-center items-center h-96">
-                <h2 class="text-primary text-2xl">Votre liste de souhaits est vide</h2>
-            </div>
-        {% endif %}
+		{% if articles|length == 0 %}
+			<div class="flex items-center h-24">
+				<h2 class="text-primary text-sm">Votre liste de souhaits est vide</h2>
+			</div>
+		{% endif %}
 	</section>
 {% endblock %}
