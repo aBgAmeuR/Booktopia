@@ -26,8 +26,9 @@ class Wishlist
     #[ORM\JoinTable(name: "wishlist_articles")]
     private Collection $articles;
 
-    public function __construct()
+    public function __construct(Utilisateur $utilisateur)
     {
+        $this->utilisateur = $utilisateur;
         $this->articles = new ArrayCollection();
     }
 

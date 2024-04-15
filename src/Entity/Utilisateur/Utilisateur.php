@@ -40,6 +40,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->commandes = new ArrayCollection();
+        $this->wishlist = new Wishlist($this);
     }
 
     public function getId(): ?int
