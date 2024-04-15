@@ -1,107 +1,94 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-				<header id="header" class="col-full">
-					<div id="logo">
-						<h1 class="site-title">Site web marchand</h1>
-					</div>
-					<nav id="site-navigation" class="main-navigation" role="navigation">
-						<button class="menu-toggle" aria-controls="site-navigation" aria-expanded="false">
-							<span>Menu</span>
-						</button>
-						<div class="menu">
-							<ul class="nav-menu">
-								<li class="page_item page-item-1">
-									<a href="/afficheRecherche">Rechercher
-										un article</a>
-								</li>
-								<li class="page_item page-item-2 current_page_item focus">
-									<a href="/accederAuPanier">Panier</a>
-								</li>
-							</ul>
-						</div>
-					</nav>
-				</header>
-				<div id="content" class="site-content">
-					<div class="col-full">
-						<header class="entry-header">
-							<h1 class="entry-title">Panier</h1>
-						</header><!-- .entry-header -->
-						<div class="entry-content">
-							<div class="woocommerce">
+				<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
+				<div id="content" class="bg-gray-50 py-8">
+					<div class="container mx-auto">
+						<header id="header" class="bg-gray-100 py-4">
+    						<div class="container mx-auto text-center">
+       					 		<h1 class="text-3xl font-bold">Panier</h1>
+   							</div>
+						</header>
+						<div class="content" class="bg-gray-50 py-8">
+							<div class="container mx-auto">
 								<form
-									class="woocommerce-cart-form"							
+									class="w-full"							
 									action="/recalculerPanier"
 									name="panier" method="post">
-									<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
-										<thead>
+									<table class="w-full" cellspacing="0">
+										<thead class="bg-gray-200">
 											<tr>
-												<th class="product-remove"></th>
-												<th class="product-thumbnail"></th>
-												<th class="product-name">Produit</th>
-												<th class="product-price">Prix</th>
-												<th class="product-quantity">Quantité</th>
-												<th class="product-subtotal">Total</th>
+												<th class="py-2 px-4">Livre</th>
+												<th class="py-2 px-4">Produit</th>
+												<th class="py-2 px-4">Prix</th>
+												<th class="py-2 px-4">Quantité</th>
+												<th class="py-2 px-4">Total</th>
+												
 											</tr>
 										</thead>
 										<tbody>
 										{% for lignePanier in panier.lignesPanier %}
-											<tr class="woocommerce-cart-form__cart-item cart_item">
-												<td class="product-remove"><a class="remove" title="Remove this item" href="{{ path('supprimerLigne', {'id': lignePanier.article.id}) }}">×</a>
-												</td>
-												<td class="product-thumbnail"><img
-													class="attachment-shop_thumbnail wp-post-image" width="145"
+											<tr class="border-b border-gray-200">
+												<td class="py-3 px-6 text-center"><img
+													class="w-24 h-24 object-cover object-center" width="145"
 													height="145" alt="hoodie_4_front"
 													src="{{ lignePanier.article.image }}"></td>
-												<td class="product-name">{{ lignePanier.article.titre }}</td>
-												<td class="product-price"><span class="amount">{{ lignePanier.prixUnitaire }}€</span></td>
-												<td class="product-quantity">
+												<td class="py-3 px-6 text-center">{{ lignePanier.article.titre }}</td>
+												<td class="py-3 px-6 text-center"><span class="amount">{{ lignePanier.prixUnitaire }}€</span></td>
+												<td class="py-3 px-6 text-center">
 													<div class="quantity">{% set random = random() %}
 														<label class="screen-reader-text" for="quantity_{{ random }}">Quantity</label>
-														<input id="quantity_{{ random }}" class="input-text qty text" type="number"
+														<input id="quantity_{{ random }}" class="input-text qty text-center w-16 " type="number"
 															 size="4" title="Qty" value="{{ lignePanier.quantite }}"
 															name="cart[{{ lignePanier.article.id }}][qty]"
 															min="1" step="1">
 													</div>
+												
 												</td>
-												<td class="product-subtotal"><span class="amount">{{ lignePanier.prixTotal }}€</span></td>
+												<td class="py-3 px-6 text-center font-bold"><span class="amount">{{ lignePanier.prixTotal }}€</span>
+												</td>
+    												<td class="py-2 px-3 text-center font-extrabold">
+           												 <a href="{{ path('supprimerLigne', {'id': lignePanier.article.id}) }}" class="text-red-500 hover:text-red-700 inline-flex justify-center items-center">
+               												 Supprimer
+            											 </a>
+													</td>
+									
+									
 											</tr>
+			
 											{% endfor %}
 											<tr>
-												<td class="actions" colspan="6"><input class="button"
-													type="submit" value="Mise à jour du panier" name="update_cart" /></td>
-											</tr>
-										</tbody>
-									</table>
-								</form>
-								<div class="cart-collaterals">
-									<div class="cross-sells"></div>
-									<div class="cart_totals ">
-										<h2>Total de la commande</h2>
-										<table cellspacing="0">
-											<tbody>
-												<tr class="cart-subtotal">
-													<th>Sous-total</th>
-													<td><span class="amount">{{ panier.total }}€</span></td>
-												</tr>
-												<tr class="shipping">
-													<th>Frais de port</th>
-													<td>Gratuit</td>
-												</tr>
-												<tr class="order-total">
-													<th>Total</th>
-													<td><strong> <span class="amount">{{ panier.total }}€</span>
-													</strong></td>
-												</tr>
-											</tbody>
-										</table>
-										<div class="wc-proceed-to-checkout">
-											<a
-												href="/commanderPanier"
-												class="checkout-button button alt wc-forward">Effectuer la
-												commande</a>
-										</div>
-									</div>
-								</div>
+    <td class="actions" colspan="6">
+        <input class="button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" value="Mise à jour du panier" name="update_cart" />
+    </td>
+</tr>
+</tbody>
+</table>
+</form>
+<div class="cart-collaterals bg-gray-100 p-5 rounded-md">
+    <div class="cross-sells"></div>
+    <div class="cart_totals  ">
+        <h2 class="mb-5 text-lg text-gray-700">Total de la commande</h2>
+        <table cellspacing="0" class="w-1/2 mb-5">
+            <tbody>
+                <tr class="cart-subtotal">
+                    <th class="py-2 text-left">Sous-total</th>
+                    <td><span class="py-2 text-left font-bold text-gray-700">{{ panier.total }}€</span></td>
+                </tr>
+                <tr class="shipping">
+                    <th class="py-2 text-left">Frais de port</th>
+                    <td class="py-2 text-left">Gratuit</td>
+                </tr>
+                <tr class="order-total">
+                    <th class="py-2 text-left">Total</th>
+                    <td class="py-2 text-left font-bold text-gray-700"><strong> <span class="amount">{{ panier.total }}€</span></strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="flex justify-end">
+            <a href="/commanderPanier" class="checkout-button bg-gray-700 py-2 px-4 rounded hover:bg-gray-800 justify-end">Effectuer la commande</a>
+        </div>
+    </div>
+</div>
 							</div>
 						</div>
 					</div><!-- .col-full -->
