@@ -9,6 +9,6 @@ cart_index:
   controller: App\Controller\CartController::index
 
 add_to_cart:
-    path: /cart/add/{id}
-    controller: App\Controller\CartController::add
-    methods: POST
+  path: /cart/add/{id}
+  controller: App\Controller\CartController::add
+  methods: POST

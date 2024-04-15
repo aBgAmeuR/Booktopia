@@ -4,82 +4,82 @@ namespace App\Entity\Panier;
 
 use ArrayObject;
 use App\Entity\Catalogue\Article;
+use App\Entity\Panier\LignePanier;
 
 class Panier
 {
-    private float $total;
+	private float $total;
 
-    private ArrayObject $lignesPanier;
+	private ArrayObject $lignesPanier;
 
 	public function __construct()
-    {
+	{
 		$this->lignesPanier = new ArrayObject();
-    }
+	}
 
 	public function setTotal(): void
 	{
 		$this->recalculer();
-    }
-	
+	}
+
 	public function getTotal(): ?float
 	{
 		$this->recalculer();
 		return $this->total;
-    }
-	
+	}
+
 	public function getLignesPanier(): ?ArrayObject
 	{
 		return $this->lignesPanier;
 	}
-	
+
 	public function recalculer(): void
 	{
 		$it = $this->getLignesPanier()->getIterator();
-		$this->total = 0.0 ;
+		$this->total = 0.0;
 		while ($it->valid()) {
 			$ligne = $it->current();
-			$ligne->recalculer() ;
-			$this->total += $ligne->getPrixTotal() ;
+			$ligne->recalculer();
+			$this->total += $ligne->getPrixTotal();
 			$it->next();
 		}
 	}
-	
-	public function ajouterLigne(Article $article): void
+
+	public function ajouterLigne(Article $article, int $quantite): void
 	{
-		$lp = $this->chercherLignePanier($article) ;
+		$lp = $this->chercherLignePanier($article);
 		if ($lp == null) {
-			$lp = new LignePanier() ;
-			$lp->setArticle($article) ; 
-			$lp->setQuantite(1) ;
-			$this->lignesPanier->append($lp) ;
+			$lp = new LignePanier();
+			$lp->setArticle($article);
+			$lp->setQuantite($quantite);
+			$this->lignesPanier->append($lp);
+		} else {
+			$lp->setQuantite($lp->getQuantite() + $quantite);
 		}
-		else {
-			$lp->setQuantite($lp->getQuantite() + 1) ;
-		}
-		$this->recalculer() ;
+		$this->recalculer();
 	}
-	
+
 	public function chercherLignePanier(Article $article): ?LignePanier
 	{
-		$lignePanier = null ;
+		$lignePanier = null;
 		$it = $this->getLignesPanier()->getIterator();
 		while ($it->valid()) {
 			$ligne = $it->current();
 			if ($ligne->getArticle()->getId() == $article->getId())
-				$lignePanier = $ligne ;
+				$lignePanier = $ligne;
 			$it->next();
 		}
-		return $lignePanier ;
+		return $lignePanier;
 	}
-	
-	public function supprimerLigne(int $id): void
+
+	public function supprimerLigne(string $id): void
 	{
-		$existe = false ;
+		$existe = false;
 		$it = $this->getLignesPanier()->getIterator();
 		while ($it->valid()) {
 			$ligne = $it->current();
 			if ($ligne->getArticle()->getId() == $id) {
-				$existe = true ;
+				$existe = true;
 				$key = $it->key();
 			}
 			$it->next();
@@ -89,4 +89,3 @@ class Panier
 		}
 	}
 }
-

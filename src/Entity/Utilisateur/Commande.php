@@ -63,7 +63,12 @@ class Commande
 
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
+        if ($utilisateur === null) {
+            throw new \InvalidArgumentException('Utilisateur cannot be null');
+        }
+
         $this->utilisateur = $utilisateur;
+
         return $this;
     }
 
