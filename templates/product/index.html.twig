@@ -12,8 +12,13 @@
 				<img src="{{ livre.image }}" alt="cover" class="w-auto h-full object-cover absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md z-10">
 			</div>
 			<div class="mt-2">
-				<h1 class="text-2xl font-extrabold text-primary line-clamp-1">{{ livre.titre }}</h1>
-				<p class="text-base text-primary line-clamp-1">{{ livre.auteur }}</p>
+				<div class='flex justify-between items-center'>
+					<div>
+						<h1 class="text-2xl font-extrabold text-primary line-clamp-1">{{ livre.titre }}</h1>
+						<p class="text-base text-primary line-clamp-1">{{ livre.auteur }}</p>
+					</div>
+						<twig:ToggleWishlist articleId="{{ livre.id }}" isInWishlist="{{ is_in_wishlist ? '1' : '0' }}"></twig:ToggleWishlist>
+				</div>
 				<div class="px-3 w-min bg-primary rounded-base mt-2">
 					<p class="text-base font-bold text-white">{{ livre.prix }}€</p>
 				</div>

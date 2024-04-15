@@ -1,5 +1,4 @@
-{% extends 'base.html.twig' %}
-<section{{attributes}} class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+<section {{attributes}} class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 	{% for product in products %}
 		<article class="h-full">
 			<a href="/product/{{ product.id }}" class="block space-y-3 p-4 rounded-base hover:bg-secondary h-full">

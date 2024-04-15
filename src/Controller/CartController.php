@@ -149,7 +149,7 @@ class CartController extends AbstractController
         $utilisateur = $this->getUser();
         if (!$utilisateur) {
             $this->addFlash('error', 'Vous devez être connecté pour passer une commande.');
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('app_login');
         }
 
         $commande = new Commande();
