@@ -141,6 +141,7 @@ class CartController extends AbstractController
         $searchDto ??= new SearchDto();
         $session = $request->getSession();
         $panier = $session->get('panier');
+        $searchDto ??= new SearchDto();
 
         if (!$panier || $panier->getLignesPanier()->count() == 0) {
             $this->addFlash('warning', 'Votre panier est vide.');
@@ -174,5 +175,23 @@ class CartController extends AbstractController
         $this->addFlash('success', 'Votre commande a été passée avec succès.');
 
         return $this->redirectToRoute('cart_index');
+    }
+
+    #[Route('/checkout', name: 'checkout', methods: ['GET'])]
+    public function checkoutAction(Request  $request): Response
+    {
+        $session = $request->getSession();
+        $panier = $session->get('panier');
+        $searchDto ??= new SearchDto();
+
+        if (!$panier) {
+            $this->addFlash('warning', 'Votre panier est vide.');
+            return $this->redirectToRoute('cart_index');
+        }
+
+        return $this->render('checkout.html.twig', [
+            'searchDto' => $searchDto,
+            'panier' => $panier
+        ]);
     }
 }

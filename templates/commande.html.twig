@@ -1,35 +1,30 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-	<header id="header" class="col-full">
-		<div id="logo">
-			<h1 class="site-title">Site web marchand</h1>
-		</div>
-	</header>
-	<main>
-		<h2>Commande #{{ commande.id }}</h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Produit</th>
-					<th>Quantité</th>
-					<th>Prix unitaire</th>
-					<th>Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for ligne in commande.lineItems %}
-					<tr>
-						<td>{{ ligne.article.titre }}</td>
-						<td>{{ ligne.quantite }}</td>
-						<td>{{ ligne.prixUnitaire }}€</td>
-						<td>{{ ligne.prixTotal }}€</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		<p>Total de la commande :
-			{{ commande.total }}€</p>
-
-		<a href="{{ path('homepage') }}" class="btn btn-primary">Confirmer la commande</a>
-	</main>
+				<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
+<main>
+    <h2>Commande #{{ commande.id }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix unitaire</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+           {% for ligne in commande.lineItems %}
+    <tr>
+        <td>{{ ligne.article.titre }}</td>
+        <td>{{ ligne.quantite }}</td>
+        <td>{{ ligne.prixUnitaire }}€</td>
+        <td>{{ ligne.prixTotal }}€</td>
+    </tr>
+{% endfor %}
+        </tbody>
+    </table>
+    <p>Total de la commande : {{ commande.total }}€</p>
+    
+     <a href="/checkout" class="btn btn-primary">Confirmer la commande</a>
+</main>
 {% endblock %}
