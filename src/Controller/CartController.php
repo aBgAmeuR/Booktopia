@@ -20,8 +20,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\DTO\SearchDto;
 
 class CartController extends AbstractController
-
-
 {
 
     private EntityManagerInterface $entityManager;
@@ -30,11 +28,7 @@ class CartController extends AbstractController
     private LivreRepository $livreRepository;
     private Panier $panier;
 
-
-
-
-
-    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger, LivreRepository $livreRepository,)
+    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger, LivreRepository $livreRepository, )
     {
         $this->entityManager = $entityManager;
         $this->logger = $logger;
@@ -49,10 +43,16 @@ class CartController extends AbstractController
         $searchDto ??= new SearchDto();
         $panier = $this->getPanierFromSession($request);
 
+        $user = $this->getUser();
+        $commandes = null;
+        if ($user) {
+            $commandes = $user->getCommandes();
+        }
+
         return $this->render('panier.html.twig', [
             'searchDto' => $searchDto,
-            'panier' => $panier
-
+            'panier' => $panier,
+            'commandes' => $commandes,
         ]);
     }
 
@@ -86,7 +86,7 @@ class CartController extends AbstractController
     }
 
     #[Route('/supprimerLigne/{id}', name: 'supprimerLigne')]
-    public function supprimerLigneAction(Request $request, string  $id): Response
+    public function supprimerLigneAction(Request $request, string $id): Response
     {
         $session = $request->getSession();
         if (!$session->isStarted()) {
@@ -138,6 +138,7 @@ class CartController extends AbstractController
     #[Route('/commanderPanier', name: 'commanderPanier')]
     public function commanderPanierAction(Request $request): Response
     {
+        $searchDto ??= new SearchDto();
         $session = $request->getSession();
         $panier = $session->get('panier');
 
@@ -154,24 +155,24 @@ class CartController extends AbstractController
 
         $commande = new Commande();
         $commande->setUtilisateur($utilisateur);
-
         foreach ($panier->getLignesPanier() as $lignePanier) {
-            $ligne = new LignePanier();
-            $ligne->setArticle($lignePanier->getArticle());
-            $ligne->setQuantite($lignePanier->getQuantite());
-            $ligne->setPrixUnitaire($lignePanier->getArticle()->getPrix());
-            $ligne->setPrixTotal($lignePanier->getPrixTotal());
-            $commande->addLineItem($ligne);
+            $articleGere = $this->entityManager->getRepository(Article::class)->find($lignePanier->getArticle()->getId());
+            $lignePanier->setArticle($articleGere);
+
+            $commande->addLineItem($lignePanier);
         }
-
+        $commande->setDate(new \DateTime());
+        $commande->setStatus('Commandé');
         $commande->setTotal($panier->getTotal());
+        $utilisateur->addCommande($commande);
 
-        $session->set('panier', new Panier()); // Clear the cart after placing the order
+        $this->entityManager->persist($commande);
+        $this->entityManager->persist($utilisateur);
+        $this->entityManager->flush();
+
+        $session->set('panier', new Panier());
         $this->addFlash('success', 'Votre commande a été passée avec succès.');
 
-        // Instead of redirecting, render the commande.html.twig with the commande details
-        return $this->render('commande.html.twig', [
-            'commande' => $commande
-        ]);
+        return $this->redirectToRoute('cart_index');
     }
 }

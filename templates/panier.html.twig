@@ -1,96 +1,125 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-				<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
-				<div id="content" class="bg-gray-50 py-8">
-					<div class="container mx-auto">
-						<header id="header" class="bg-gray-100 py-4">
-    						<div class="container mx-auto text-center">
-       					 		<h1 class="text-3xl font-bold">Panier</h1>
-   							</div>
-						</header>
-						<div class="content" class="bg-gray-50 py-8">
-							<div class="container mx-auto">
-								<form
-									class="w-full"							
-									action="/recalculerPanier"
-									name="panier" method="post">
-									<table class="w-full" cellspacing="0">
-										<thead class="bg-gray-200">
-											<tr>
-												<th class="py-2 px-4">Livre</th>
-												<th class="py-2 px-4">Produit</th>
-												<th class="py-2 px-4">Prix</th>
-												<th class="py-2 px-4">Quantité</th>
-												<th class="py-2 px-4">Total</th>
-												
-											</tr>
-										</thead>
-										<tbody>
-										{% for lignePanier in panier.lignesPanier %}
-											<tr class="border-b border-gray-200">
-												<td class="py-3 px-6 text-center"><img
-													class="w-24 h-24 object-cover object-center" width="145"
-													height="145" alt="hoodie_4_front"
-													src="{{ lignePanier.article.image }}"></td>
-												<td class="py-3 px-6 text-center">{{ lignePanier.article.titre }}</td>
-												<td class="py-3 px-6 text-center"><span class="amount">{{ lignePanier.prixUnitaire }}€</span></td>
-												<td class="py-3 px-6 text-center">
-													<div class="quantity">{% set random = random() %}
-														<label class="screen-reader-text" for="quantity_{{ random }}">Quantity</label>
-														<input id="quantity_{{ random }}" class="input-text qty text-center w-16 " type="number"
-															 size="4" title="Qty" value="{{ lignePanier.quantite }}"
-															name="cart[{{ lignePanier.article.id }}][qty]"
-															min="1" step="1">
-													</div>
-												
-												</td>
-												<td class="py-3 px-6 text-center font-bold"><span class="amount">{{ lignePanier.prixTotal }}€</span>
-												</td>
-    												<td class="py-2 px-3 text-center font-extrabold">
-           												 <a href="{{ path('supprimerLigne', {'id': lignePanier.article.id}) }}" class="text-red-500 hover:text-red-700 inline-flex justify-center items-center">
-               												 Supprimer
-            											 </a>
-													</td>
-									
-									
-											</tr>
-			
-											{% endfor %}
-											<tr>
-    <td class="actions" colspan="6">
-        <input class="button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" value="Mise à jour du panier" name="update_cart" />
-    </td>
-</tr>
-</tbody>
-</table>
-</form>
-<div class="cart-collaterals bg-gray-100 p-5 rounded-md flex justify-between w-full items-end">
+	<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
+	<div id="content" class=" py-8">
+		<div class="container mx-auto">
+			<h1 class="text-2xl font-extrabold text-primary line-clamp-1">Votre panier</h1>
+			<form class="w-full" action="/recalculerPanier" name="panier" method="post">
+				{% if panier.lignesPanier|length == 0 %}
+					<div class="flex items-center h-24">
+						<h2 class="text-primary text-sm">Votre panier est vide</h2>
+					</div>
+				{% endif %}
 
-    <div class="cart_totals">
-        <h2 class="mb-5 text-lg text-gray-700">Total de la commande</h2>
-        <table cellspacing="0" class="w-1/2 mb-5">
-            <tbody>
-                <tr class="cart-subtotal">
-                    <th class="py-2 text-left">Sous-total</th>
-                    <td><span class="py-2 text-left font-bold text-gray-700">{{ panier.total }}€</span></td>
-                </tr>
-                <tr class="shipping">
-                    <th class="py-2 text-left">Frais de port</th>
-                    <td class="py-2 text-left">Gratuit</td>
-                </tr>
-                <tr class="order-total">
-                    <th class="py-2 text-left">Total</th>
-                    <td class="py-2 text-left font-bold text-gray-700"><strong> <span class="amount">{{ panier.total }}€</span></strong></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-        <div class="">
-            <a href="/commanderPanier" class="checkout-button bg-gray-700 py-2 px-4 rounded hover:bg-gray-800 justify-end">Effectuer la commande</a>
-        </div>
-</div>
+				{% for lignePanier in panier.lignesPanier %}
+					<div class="flex justify-between flex-row items-center border-b-2 border-gray-200 py-2">
+						<div class="flex justify-between gap-4 p-4 rounded-base hover:bg-secondary h-full w-full group">
+							<div class="flex gap-4">
+								<div class="h-auto w-32 flex justify-center items-center overflow-hidden rounded-base">
+									<img src="{{ lignePanier.article.image }}" alt="image product" class="w-full rounded-base">
+								</div>
+								<main class="flex flex-col justify-between">
+									<div>
+										<h2 class="text-primary text-base line-clamp-3">{{ lignePanier.article.titre }}</h2>
+										<div class="text-secondary text-sm">{{ lignePanier.article.auteur }}</div>
+										<div class="text-secondary text-sm">{{ lignePanier.prixUnitaire }}€</div>
+									</div>
+
+									<div class="quantity">{% set random = random() %}
+										<label class="screen-reader-text" for="quantity_{{ random }}">Quantity</label>
+										<input id="quantity_{{ random }}" class="input-text qty text-center w-16 " type="number" size="4" title="Qty" value="{{ lignePanier.quantite }}" name="cart[{{ lignePanier.article.id }}][qty]" min="1" step="1">
+									</div>
+								</main>
+
+							</div>
+							<div class="flex flex-col justify-between">
+								<a href="{{ path('supprimerLigne', {'id': lignePanier.article.id}) }}" class="p-3 rounded-md bg-secondary group-hover:bg-white" type="submit">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+								</a>
 							</div>
 						</div>
-					</div><!-- .col-full -->
-				</div><!-- #content -->
-{% endblock %}
+					</div>
+				{% endfor %}
+
+
+				<div>
+					<h2 class="my-2 text-xl text-gray-700">Total de la commande</h2>
+					<div class='flex justify-between'>
+						<div class="flex gap-6">
+							<div class="flex flex-col gap-0.5">
+								<div>Sous-total</div>
+								<span class="font-bold text-gray-700">{{ panier.total }}€</span>
+							</div>
+							<div class="flex flex-col gap-0.5">
+								<div>Frais de port</div>
+								<span class="font-bold text-gray-700">Gratuit</span>
+							</div>
+							<div class="flex flex-col gap-0.5">
+								<div>Total</div>
+								<span class="font-bold text-gray-700">{{ panier.total }}€</span>
+							</div>
+						</div>
+						<div class="flex gap-2">
+							<input class="inline-block shrink-0 rounded-md border border-primary bg-secondary px-12 py-3 text-sm cursor-pointer font-medium transition hover:bg-transparent text-primary focus:outline-none focus:ring active:text-primary" type="submit" value="Mise à jour du panier" name="update_cart"/>
+							<a href="/commanderPanier" class="inline-block shrink-0 rounded-md border border-primary bg-primary px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-primary focus:outline-none focus:ring active:text-primary">Effectuer la commande</a>
+						</div>
+					</div>
+				</div>
+			</form>
+			{% if commandes %}
+				<div class="my-8">
+					<h1 class="text-2xl font-extrabold text-primary line-clamp-1">Vos commandes précédentes</h1>
+					{% for commande in commandes %}
+						<div>
+							<h2 class="my-2 text-xl text-gray-700">Commande n°
+								{{ commande.id }}</h2>
+							<div class='flex justify-between'>
+								<div class="flex gap-6">
+									<div class="flex flex-col gap-0.5">
+										<div>Date de la commande</div>
+										<span class="font-bold text-gray-700">{{ commande.date|date('d/m/Y') }}</span>
+									</div>
+									<div class="flex flex-col gap-0.5">
+										<div>Status</div>
+										<span class="font-bold text-gray-700">{{ commande.status }}</span>
+									</div>
+									<div class="flex flex-col gap-0.5">
+										<div>Total de la commande</div>
+										<span class="font-bold text-gray-700">{{ commande.total }}€</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="my-4 grid grid-cols-2 gap-1">
+							{% for ligneCommande in commande.lineItems %}
+								<div class="flex justify-between flex-row items-center border-b-2 border-gray-200 py-2">
+									<div class="flex justify-between gap-4 p-4 rounded-base hover:bg-secondary h-full w-full group">
+										<div class="flex gap-4">
+											<div class="h-auto w-32 flex justify-center items-center overflow-hidden rounded-base">
+												<img src="{{ ligneCommande.article.image }}" alt="image product" class="w-full rounded-base">
+											</div>
+											<main class="flex flex-col justify-between">
+												<div>
+													<h2 class="text-primary text-base line-clamp-3">{{ ligneCommande.article.titre }}</h2>
+													<div class="text-secondary text-sm">{{ ligneCommande.article.auteur }}</div>
+													<div class="text-secondary text-sm">{{ ligneCommande.prixUnitaire }}€</div>
+													<div class="text-secondary text-sm">{{ ligneCommande.quantite }}
+														exemplaires</div>
+												</div>
+											</main>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					{% endfor %}
+
+					{% if commandes|length == 0 %}
+						<div class="flex items-center h-24">
+							<h2 class="text-primary text-sm">Vous n'avez pas encore passé de commande</h2>
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+		</div>
+	{% endblock %}

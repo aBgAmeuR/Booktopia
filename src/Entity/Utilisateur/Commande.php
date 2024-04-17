@@ -30,10 +30,6 @@ class Commande
     #[ORM\Column(type: 'float')]
     private ?float $total = null;
 
-    #[ORM\ManyToOne(targetEntity: Adresse::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Adresse $adresse = null;
-
     #[ORM\Column(type: 'datetime')]
     private ?DateTimeInterface $date = null;
 
@@ -94,16 +90,6 @@ class Commande
         return $this;
     }
 
-    public function getAdresse(): ?Adresse
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(?Adresse $adresse): self
-    {
-        $this->adresse = $adresse;
-        return $this;
-    }
 
     public function getDate(): ?DateTimeInterface
     {

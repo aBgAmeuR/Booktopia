@@ -15,11 +15,10 @@ class LignePanier
     #[ORM\Column(type: 'integer')] // Définit le type de la colonne
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Article::class)] // Configure une relation ManyToOne avec l'entité Article
+    #[ORM\ManyToOne(targetEntity: Article::class, cascade: ['persist'])]
 
     private Article $article;
     #[ORM\Column(type: 'float')]
-
 
     private float $prixUnitaire;
     #[ORM\Column(type: 'float')]
@@ -27,9 +26,9 @@ class LignePanier
     private float $prixTotal;
     #[ORM\Column(type: 'integer')]
     private int $quantite;
-    #[ORM\ManyToOne(targetEntity: Commande::class)] // Configure une relation ManyToOne avec l'entité Commande
+    #[ORM\ManyToOne(targetEntity: Commande::class)]
 
-    private   ?Commande $commande = null;
+    private ?Commande $commande = null;
 
 
 
