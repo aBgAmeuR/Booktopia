@@ -1,10 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-				<header id="header" class="col-full">
-    <div id="logo">
-        <h1 class="site-title">Site web marchand</h1>
-    </div>
-</header>
+				<twig:Header is_logged_in="{{ app.user ? '1' : '0' }}" :searchdto="searchDto"></twig:Header>
 <main>
     <h2>Commande #{{ commande.id }}</h2>
     <table>
@@ -29,6 +25,6 @@
     </table>
     <p>Total de la commande : {{ commande.total }}€</p>
     
-     <a href="{{ path('homepage') }}" class="btn btn-primary">Confirmer la commande</a>
+     <a href="/checkout" class="btn btn-primary">Confirmer la commande</a>
 </main>
 {% endblock %}
